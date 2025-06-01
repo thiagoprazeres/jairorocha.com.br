@@ -146,7 +146,7 @@
               @if(passouFiltroNovo(imovel) && passouFiltroVendaAluguel(imovel)
               && passouFiltroRegiao(imovel)) {
               <a
-                [routerLink]="['/imovel', imovel.codigoReferenciaImovel]"
+                [routerLink]="['/imovel', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.codigoReferenciaImovel]"
                 class="card bg-base-100 relative shadow-xl transition-shadow duration-300 hover:shadow-2xl"
               >
                 @if (imovel.novos) {

@@ -10,7 +10,7 @@
       @for (imovel of imoveis$ | async; track imovel.id; let idx = $index) {
 
       <a
-        [routerLink]="['/imovel', imovel.codigoReferenciaImovel]"
+        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.codigoReferenciaImovel]"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
         [class.row-span-2]="idx === 0"
       >
