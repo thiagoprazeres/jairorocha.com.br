@@ -1,0 +1,278 @@
+<div class="container mx-auto p-4 md:p-6 lg:p-8">
+  @if (tipo && categoria) {
+  <div class="mb-8">
+    <!-- Breadcrumb -->
+    <div class="breadcrumbs mb-6 text-sm">
+      <ul>
+        <li>
+          <a [routerLink]="['/imoveis']" class="text-primary hover:underline"
+            >Imóveis</a
+          >
+        </li>
+        <li>
+          <a
+            [routerLink]="['/imoveis', categoria.slug]"
+            class="text-primary hover:underline"
+            >{{ categoria.nome }}</a
+          >
+        </li>
+        <li class="text-neutral">{{ tipo.nome }}</li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col gap-8 lg:flex-row">
+      <!-- Main Content -->
+      <div class="lg:w-2/3">
+        <div class="prose max-w-none">
+          <h1 class="text-primary mb-4 text-4xl font-bold">{{ tipo.nome }}</h1>
+          <p class="text-neutral mb-8 text-lg">{{ tipo.descricao }}</p>
+
+          <!-- Imóveis List -->
+          <div class="mb-12">
+            <h2 class="text-primary mb-4 text-2xl font-semibold">
+              Imóveis disponíveis
+            </h2>
+            <div
+              class="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between"
+            >
+              <div class="flex flex-col gap-4 sm:flex-row">
+                <div class="join">
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroNovo === null"
+                    (click)="setFiltroNovo(null)"
+                  >
+                    Todos
+                  </button>
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroNovo === true"
+                    (click)="setFiltroNovo(true)"
+                  >
+                    Novos
+                  </button>
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroNovo === false"
+                    (click)="setFiltroNovo(false)"
+                  >
+                    Usados
+                  </button>
+                </div>
+                <div class="join">
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroVendaOuAluguel === 'todos'"
+                    (click)="setFiltroVendaOuAluguel('todos')"
+                  >
+                    Todos
+                  </button>
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroVendaOuAluguel === 'venda'"
+                    (click)="setFiltroVendaOuAluguel('venda')"
+                  >
+                    Venda
+                  </button>
+                  <button
+                    class="btn btn-sm join-item"
+                    [class.btn-active]="filtroVendaOuAluguel === 'aluguel'"
+                    (click)="setFiltroVendaOuAluguel('aluguel')"
+                  >
+                    Aluguel
+                  </button>
+                </div>
+
+                <!-- Filtro por Região -->
+                <div class="dropdown dropdown-end">
+                  <button tabindex="0" class="btn btn-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="mr-1 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    {{ textoFiltroRegiao }}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="ml-1 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
+                  >
+                    <li (click)="setFiltroRegiao(null)">
+                      <a [class.active]="!filtroRegiao">Todas as cidades</a>
+                    </li>
+                    @for (cidade of regioesDisponiveis; track cidade) {
+                    <li (click)="setFiltroRegiao(cidade)">
+                      <a [class.active]="filtroRegiao === cidade">
+                        {{ cidade }}, PE
+                      </a>
+                    </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+            @if(imoveis) {
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              @for (imovel of imoveis; track imovel.id) {
+              @if(passouFiltroNovo(imovel) && passouFiltroVendaAluguel(imovel)
+              && passouFiltroRegiao(imovel)) {
+              <a
+                [routerLink]="['/imovel', imovel.codigoReferenciaImovel]"
+                class="card bg-base-100 relative shadow-xl transition-shadow duration-300 hover:shadow-2xl"
+              >
+                @if (imovel.novos) {
+                <div class="badge badge-primary absolute top-2 right-2 z-10">
+                  Novo
+                </div>
+                }
+                <figure>
+                  @if (imovel.fotoImovelList && imovel.fotoImovelList.length >
+                  0) {
+                  <img
+                    [src]="imovel.fotoImovelList[0].url"
+                    [alt]="imovel.nomeImovel"
+                    class="h-48 w-full object-cover"
+                  />
+                  } @else {
+                  <div
+                    class="flex h-48 w-full items-center justify-center bg-gray-200"
+                  >
+                    <span class="text-gray-500">Sem imagem</span>
+                  </div>
+                  }
+                </figure>
+                <div class="card-body p-4">
+                  <h3 class="card-title text-lg">{{ imovel.nomeImovel }}</h3>
+                  <p class="text-neutral mb-2 text-sm">
+                    {{ imovel.endereco }}{{ imovel.numero ? ', ' + imovel.numero
+                    : '' }} - {{ imovel.nomeBairro }}, {{ imovel.nomeCidade +' -
+                    '+imovel.siglaEstado}}
+                  </p>
+                  <p class="text-primary mb-2 text-lg font-bold">
+                    {{ imovel.preco | currency:'BRL':'symbol':'1.2-2' }}
+                  </p>
+                  <div class="card-actions justify-end">
+                    <!-- <a class="btn btn-primary btn-sm">Ver detalhes</a> -->
+                  </div>
+                </div>
+              </a>
+              } } @empty {
+              <div class="alert alert-warning">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6 shrink-0 stroke-current"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+                <span
+                  >Nenhum imóvel encontrado para os filtros selecionados.</span
+                >
+              </div>
+              }
+            </div>
+            } @else if (error) {
+            <div class="alert alert-error">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{{ error }}</span>
+            </div>
+            } @else {
+
+            <div class="flex items-center justify-center py-12">
+              <span
+                class="loading loading-spinner loading-lg text-primary"
+              ></span>
+              <span class="ml-4 text-lg">Carregando imóveis...</span>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:w-1/3">
+        <div class="card bg-base-200 shadow-sm md:sticky md:top-8">
+          <div class="card-body">
+            <h3 class="card-title mb-4 text-xl">
+              Outros Tipos de {{ categoria.nome }}
+            </h3>
+            <div class="divider m-0 mb-4"></div>
+            <div class="space-y-3">
+              @for (outroTipo of outrosTipos; track outroTipo.id) {
+              <a
+                [routerLink]="['/imoveis', categoria.slug, outroTipo.slug]"
+                class="card card-side card-bordered hover:bg-base-300 transition-colors duration-200"
+              >
+                <div class="card-body p-4">
+                  <h4 class="card-title text-lg">{{ outroTipo.nome }}</h4>
+                  <p class="text-neutral text-sm">{{ outroTipo.descricao }}</p>
+                </div>
+              </a>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="hero min-h-[50vh]">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Ops!</h1>
+        <p class="py-6 text-lg">Tipo de imóvel não encontrado</p>
+        <a [routerLink]="['/imoveis']" class="btn btn-primary">
+          Ver todos os imóveis
+        </a>
+      </div>
+    </div>
+  </div>
+  }
+</div>

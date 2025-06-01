@@ -1,0 +1,32 @@
+<div class="container mx-auto px-4 py-16">
+  @if (categoria) {
+  <div class="mb-12 text-center">
+    <img
+      [src]="categoria.icone"
+      [alt]="categoria.nome"
+      class="mx-auto size-12"
+    />
+    <h1 class="text-secondary mb-2 text-5xl font-bold">{{ categoria.nome }}</h1>
+    <p class="text-neutral text-lg">{{ categoria.descricao }}</p>
+  </div>
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{tiposImoveis.length}} xl:grid-cols-{{tiposImoveis.length}}"
+  >
+    @for (tipo of tiposImoveis; track tipo.id) {
+    <a
+      class="card transition-colors duration-300 hover:bg-neutral-200"
+      [routerLink]="['/imoveis', categoria.slug, tipo.slug]"
+    >
+      <div class="card-body">
+        <h2 class="card-title">{{ tipo.nome }}</h2>
+        <p class="text-base-content/80">{{ tipo.descricao }}</p>
+      </div>
+    </a>
+    }
+  </div>
+  } @else {
+  <div class="py-12 text-center">
+    <p class="text-lg">Categoria não encontrada</p>
+  </div>
+  }
+</div>

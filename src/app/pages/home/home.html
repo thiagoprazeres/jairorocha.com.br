@@ -1,0 +1,171 @@
+<app-imoveis />
+
+<!-- Lançamentos Section -->
+<section class="bg-neutral-50 py-16">
+  <div class="container mx-auto px-4">
+    <h2 class="text-primary mb-10 text-center text-4xl font-bold">
+      Lançamentos
+    </h2>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+      @for (imovel of imoveis$ | async; track imovel.id; let idx = $index) {
+
+      <a
+        [routerLink]="['/imovel', imovel.codigoReferenciaImovel]"
+        class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
+        [class.row-span-2]="idx === 0"
+      >
+        <figure>
+          <img
+            [src]="imovel.fotoImovelList[imovel.fotodestaque].url"
+            [alt]="imovel.nomeImovel"
+            [className]="idx === 0 ? '' : 'h-48 w-full object-cover'"
+          />
+        </figure>
+        <div class="card-body">
+          <h3 class="text-primary font-semibold">
+            {{ imovel.tipoImovel.nome }}
+          </h3>
+          <h2 class="card-title">
+            {{ imovel.nomeImovel }}
+            <div class="badge badge-secondary">
+              {{ imovel.novos ? 'Novo' : 'Usado' }}
+            </div>
+          </h2>
+          <p>{{ imovel.preco | currency: 'BRL' }}</p>
+          <p>{{ imovel.nomeCidade }} - {{ imovel.siglaEstado }}</p>
+          <div class="card-actions justify-end">
+            @if(imovel.paraVenda){
+            <div class="badge badge-outline">Venda</div>
+            } @if(imovel.paraLocacao){
+            <div class="badge badge-outline">Aluguel</div>
+            }
+          </div>
+        </div>
+      </a>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Diferenciais Section -->
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <!-- Section Header -->
+    <div class="mx-auto mb-12 max-w-3xl text-center">
+      <h2 class="text-primary mb-4 text-4xl font-bold">
+        🏆 Por que escolher a Jairo Rocha?
+      </h2>
+      <p class="text-base-content/80 text-lg">
+        Na hora de comprar ou vender um imóvel, cada detalhe conta. Com a Jairo
+        Rocha, você tem muito mais do que uma simples intermediação —
+        <strong>você tem parceria, confiança e resultados reais</strong>.
+      </p>
+    </div>
+
+    <!-- Diferenciais Grid -->
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Diferencial 1 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">✨</div>
+          <h3 class="card-title text-xl">Imóveis que só você vê</h3>
+          <p class="text-base-content/80">
+            Tenha acesso exclusivo a oportunidades selecionadas antes mesmo de
+            irem ao mercado.
+          </p>
+        </div>
+      </div>
+
+      <!-- Diferencial 2 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">🧭</div>
+          <h3 class="card-title text-xl">Acompanhamento de ponta a ponta</h3>
+          <p class="text-base-content/80">
+            Da visita ao contrato, nossa equipe acompanha você em cada etapa com
+            total transparência e suporte.
+          </p>
+        </div>
+      </div>
+
+      <!-- Diferencial 3 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">💰</div>
+          <h3 class="card-title text-xl">Financiamento facilitado</h3>
+          <p class="text-base-content/80">
+            Conte com a gente para simular, negociar e agilizar o seu crédito,
+            com a maior facilidade com o padrão Jairo Rocha.
+          </p>
+        </div>
+      </div>
+
+      <!-- Diferencial 4 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">📑</div>
+          <h3 class="card-title text-xl">Menos papel, mais agilidade</h3>
+          <p class="text-base-content/80">
+            Cuidamos da burocracia para você focar no que realmente importa: o
+            novo lar.
+          </p>
+        </div>
+      </div>
+
+      <!-- Diferencial 5 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">🎯</div>
+          <h3 class="card-title text-xl">Atendimento sob medida</h3>
+          <p class="text-base-content/80">
+            Cada cliente é único. Aqui, você é atendido por quem entende o seu
+            momento e as suas necessidades.
+          </p>
+        </div>
+      </div>
+
+      <!-- Diferencial 6 -->
+      <div
+        class="card bg-primary-content border-1 border-solid border-neutral-200"
+      >
+        <div class="card-body">
+          <div class="text-4xl">🛡️</div>
+          <h3 class="card-title text-xl">Segurança em cada cláusula</h3>
+          <p class="text-base-content/80">
+            Com respaldo jurídico próprio, garantimos contratos claros, seguros
+            e sem surpresas.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="mt-16 text-center">
+      <a href="/contato" class="btn btn-primary btn-lg">
+        Fale com um consultor
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="ml-2 h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

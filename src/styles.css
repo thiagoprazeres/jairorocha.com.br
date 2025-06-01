@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "jairorocha";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: #ffffff;
+  --color-base-200: oklch(98% 0 0);
+  --color-base-300: oklch(95% 0 0);
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: #fd0000;
+  --color-primary-content: #fefefe;
+  --color-secondary: #010101;
+  --color-secondary-content: #fefefe;
+  --color-accent: #fd7300;
+  --color-accent-content: #ffffff;
+  --color-neutral: #9c9c9c;
+  --color-neutral-content: #ffffff;
+  --color-info: #0056fd;
+  --color-info-content: #ffffff;
+  --color-success: #00bd6b;
+  --color-success-content: #ffffff;
+  --color-warning: #fdbf00;
+  --color-warning-content: #ffffff;
+  --color-error: #c70000;
+  --color-error-content: #ffffff;
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.1875rem;
+  --border: 2px;
+  --depth: 0;
+  --noise: 0;
+}
+
+swiper-container {
+  --swiper-theme-color: #fefefe;
+}
