@@ -1,8 +1,7 @@
-import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
-import { AsyncPipe, isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { Imoveis } from '../imoveis/imoveis';
 import { Observable } from 'rxjs';
-import { of } from 'rxjs';
 //import { imoveis } from '../../data/imoveis.data';
 import { Imovel } from '../../interfaces/imovel.interface';
 import { RouterLink } from '@angular/router';
@@ -18,17 +17,15 @@ import { map } from 'rxjs/operators';
 export class Home implements OnInit {
   imoveis$: Observable<Imovel[]> | null = null;
 
-  constructor(private imovelService: ImovelService, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private imovelService: ImovelService) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.imoveis$ = this.imovelService
-        .getAllImoveis()
-        .pipe(
-          map((imoveis: Imovel[]) =>
-            imoveis.filter((imovel) => imovel.urlFotoDestaque).slice(0, 5),
-          ),
-        );
-    }
+    this.imoveis$ = this.imovelService
+      .getAllImoveis()
+      .pipe(
+        map((imoveis: Imovel[]) =>
+          imoveis.filter((imovel) => imovel.urlFotoDestaque).slice(0, 5),
+        ),
+      );
   }
 }

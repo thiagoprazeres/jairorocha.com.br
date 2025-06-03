@@ -11,7 +11,6 @@ import { ImovelService } from '../../../services/imovel.service';
 import { register } from 'swiper/element/bundle';
 import { Swiper } from 'swiper/types';
 import { Observable } from 'rxjs';
-import { Inject, PLATFORM_ID } from '@angular/core';
 
 register();
 
@@ -37,18 +36,13 @@ export class DetalheImovelComponent implements OnInit {
 
   private imovelService = inject(ImovelService);
 
-  constructor(
-    private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) private platformId: Object,
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.route.params.subscribe((params: { [key: string]: string }) => {
-        const codigoReferenciaImovel = params['id'];
+    this.route.params.subscribe((params: { [key: string]: string }) => {
+      const codigoReferenciaImovel = params['id'];
 
-        this.imovel$ = this.imovelService.getImovelById(codigoReferenciaImovel);
-      });
-    }
+      this.imovel$ = this.imovelService.getImovelById(codigoReferenciaImovel);
+    });
   }
 }
