@@ -10,7 +10,7 @@
       @if(imoveis$ | async; as imoveis){ 
         @for (imovel of imoveis; track imovel.id; let idx = $index) {
       <a
-        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
+        [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
         [class.row-span-2]="idx === 0"
       >

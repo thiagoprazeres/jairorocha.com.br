@@ -5,13 +5,11 @@
     <div class="breadcrumbs mb-6 text-sm">
       <ul>
         <li>
-          <a [routerLink]="['/imoveis']" class="text-primary hover:underline"
-            >Imóveis</a
-          >
+          <a href="/imoveis" class="text-primary hover:underline">Imóveis</a>
         </li>
         <li>
           <a
-            [routerLink]="['/imoveis', categoria.slug]"
+            [href]="`/imoveis/${categoria.slug}`"
             class="text-primary hover:underline"
             >{{ categoria.nome }}</a
           >
@@ -145,7 +143,7 @@
               @if(passouFiltroNovo(imovel) && passouFiltroVendaAluguel(imovel)
               && passouFiltroRegiao(imovel)) {
               <a
-                [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
+                [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
                 class="card bg-base-100 relative shadow-xl transition-shadow duration-300 hover:shadow-2xl"
               >
                 @if (imovel.novos) {
@@ -200,7 +198,7 @@
             <div class="space-y-3">
               @for (outroTipo of outrosTipos; track outroTipo.id) {
               <a
-                [routerLink]="['/imoveis', categoria.slug, outroTipo.slug]"
+                [href]="`/imoveis/${categoria.slug}/${outroTipo.slug}`"
                 class="card card-side card-bordered hover:bg-base-300 transition-colors duration-200"
               >
                 <div class="card-body p-4">
@@ -221,9 +219,7 @@
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Ops!</h1>
         <p class="py-6 text-lg">Tipo de imóvel não encontrado</p>
-        <a [routerLink]="['/imoveis']" class="btn btn-primary">
-          Ver todos os imóveis
-        </a>
+        <a href="/imoveis" class="btn btn-primary">Ver todos os imóveis</a>
       </div>
     </div>
   </div>
