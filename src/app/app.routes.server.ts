@@ -59,6 +59,7 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: 'imoveis/:categoriaSlug/:tipoSlug',
     renderMode: RenderMode.Prerender,
+    fallback: PrerenderFallback.Client,
     async getPrerenderParams() {
       return tiposImoveis.map((tipo) => ({
         categoriaSlug: tipo.categoriaImovel.slug,
@@ -68,6 +69,7 @@ export const serverRoutes: ServerRoute[] = [
   },
   {
     path: 'imoveis/:categoriaSlug/:tipoSlug/:urlCustom/:id',
+    fallback: PrerenderFallback.Client,
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       return ids.map((id) => ({
