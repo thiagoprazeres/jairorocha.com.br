@@ -1,4 +1,4 @@
-import { RenderMode, ServerRoute } from '@angular/ssr';
+import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
 import { routes } from './app.routes';
 import { categoriasImoveis, tiposImoveis } from './data/enum.data';
 import { codigosReferencia } from './data/codigos-referencia';
@@ -28,6 +28,7 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: '',
     renderMode: RenderMode.Prerender,
+    fallback: PrerenderFallback.Client,
     getPrerenderParams,
   },
   {
