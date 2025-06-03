@@ -15,7 +15,7 @@
     @for (tipo of tiposImoveis; track tipo.id) {
     <a
       class="card transition-colors duration-300 hover:bg-neutral-200"
-      [routerLink]="['/imoveis', categoria.slug, tipo.slug]"
+      [href]="`/imoveis/${categoria.slug}/${tipo.slug}`"
     >
       <div class="card-body">
         <h2 class="card-title">{{ tipo.nome }}</h2>

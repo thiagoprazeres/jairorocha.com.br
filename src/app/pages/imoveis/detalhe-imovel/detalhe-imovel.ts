@@ -4,20 +4,21 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { AsyncPipe, CommonModule, isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { Imovel } from '../../../interfaces/imovel.interface';
 import { ImovelService } from '../../../services/imovel.service';
 import { register } from 'swiper/element/bundle';
 import { Swiper } from 'swiper/types';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 register();
 
 @Component({
   selector: 'app-detalhe-imovel',
   standalone: true,
-  imports: [CommonModule, RouterLink, AsyncPipe],
+  imports: [CommonModule, AsyncPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './detalhe-imovel.html',
 })
@@ -32,7 +33,7 @@ export class DetalheImovelComponent implements OnInit {
   onSlideChange() {
     console.log('slide changed');
   }
-  imovel$!: Observable<Imovel>;
+  imovel$!: Observable<Imovel | undefined>;
 
   private imovelService = inject(ImovelService);
 
@@ -40,9 +41,16 @@ export class DetalheImovelComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: { [key: string]: string }) => {
-      const codigoReferenciaImovel = params['id'];
+      const id = params['id'];
 
-      this.imovel$ = this.imovelService.getImovelById(codigoReferenciaImovel);
+      // this.imovel$ = this.imovelService.getImovelById(codigoReferenciaImovel);
+      this.imovel$ = this.imovelService
+        .getAllImoveis()
+        .pipe(
+          map((imoveis: Imovel[]) =>
+            imoveis.find((imovel) => imovel.id === Number(id)),
+          ),
+        );
     });
   }
 }
