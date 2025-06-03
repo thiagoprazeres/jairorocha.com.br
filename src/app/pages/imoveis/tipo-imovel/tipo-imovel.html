@@ -140,13 +140,13 @@
                 </div>
               </div>
             </div>
-            @if(imoveis) {
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-              @for (imovel of imoveis; track imovel.id) {
+            @if(imoveis$ | async) {
+            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              @for (imovel of imoveis$ | async; track imovel.id) {
               @if(passouFiltroNovo(imovel) && passouFiltroVendaAluguel(imovel)
               && passouFiltroRegiao(imovel)) {
               <a
-                [routerLink]="['/imovel', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.codigoReferenciaImovel]"
+                [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
                 class="card bg-base-100 relative shadow-xl transition-shadow duration-300 hover:shadow-2xl"
               >
                 @if (imovel.novos) {
@@ -155,10 +155,9 @@
                 </div>
                 }
                 <figure>
-                  @if (imovel.fotoImovelList && imovel.fotoImovelList.length >
-                  0) {
+                  @if (imovel.urlFotoDestaque) {
                   <img
-                    [src]="imovel.fotoImovelList[0].url"
+                    [src]="imovel.urlFotoDestaque"
                     [alt]="imovel.nomeImovel"
                     class="h-48 w-full object-cover"
                   />
@@ -224,7 +223,6 @@
               <span>{{ error }}</span>
             </div>
             } @else {
-
             <div class="flex items-center justify-center py-12">
               <span
                 class="loading loading-spinner loading-lg text-primary"

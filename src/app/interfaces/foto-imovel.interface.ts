@@ -3,7 +3,7 @@ export interface FotoImovel {
   descricao: string;
   destaque: number;
   url: string;
-  urlOriginal: string;
+  urlOriginal?: string;
   urlThumbnail: string;
   urlThumbnailMiddleHD: string;
 }

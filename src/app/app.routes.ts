@@ -29,7 +29,7 @@ export const routes: Routes = [
     component: TipoImovel,
   },
   {
-    path: 'imoveis/:categoriaSlug/:tipoSlug/:codigoReferenciaImovel',
+    path: 'imoveis/:categoriaSlug/:tipoSlug/:urlCustom/:id',
     component: DetalheImovelComponent,
   },
   {

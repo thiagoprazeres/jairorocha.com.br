@@ -8,6 +8,7 @@ import { Imovel } from '../../interfaces/imovel.interface';
 import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { ImovelService } from '../../services/imovel.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,12 @@ export class Home implements OnInit {
   constructor(private imovelService: ImovelService) {}
 
   ngOnInit(): void {
-    this.imoveis$ = this.imovelService.getImoveis(5);
+    this.imoveis$ = this.imovelService
+      .getAllImoveis()
+      .pipe(
+        map((imoveis: Imovel[]) =>
+          imoveis.filter((imovel) => imovel.urlFotoDestaque).slice(0, 5),
+        ),
+      );
   }
 }

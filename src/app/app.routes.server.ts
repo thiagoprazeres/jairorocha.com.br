@@ -1,11 +1,12 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 import { routes } from './app.routes';
-import { categoriasImoveis, tiposImoveis } from './data/enum-data';
+import { categoriasImoveis, tiposImoveis } from './data/enum.data';
 import { codigosReferencia } from './data/codigos-referencia';
 import { map } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ImovelService } from './services/imovel.service';
+import { ids } from './data/ids';
 
 // Function to get all possible paths for prerendering
 export async function getPrerenderParams() {
@@ -65,13 +66,14 @@ export const serverRoutes: ServerRoute[] = [
     },
   },
   {
-    path: 'imoveis/:categoriaSlug/:tipoSlug/:codigoReferenciaImovel',
+    path: 'imoveis/:categoriaSlug/:tipoSlug/:urlCustom/:id',
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
-      return codigosReferencia.map((codigo) => ({
-        categoriaSlug: codigo.split('/')[0],
-        tipoSlug: codigo.split('/')[1],
-        codigoReferenciaImovel: codigo.split('/')[2],
+      return ids.map((id) => ({
+        categoriaSlug: id.split('/')[0],
+        tipoSlug: id.split('/')[1],
+        urlCustom: id.split('/')[2],
+        id: id.split('/')[3],
       }));
     },
   },

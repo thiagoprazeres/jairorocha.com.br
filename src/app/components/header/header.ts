@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CategoriaImovel } from '../../interfaces/categoria-imovel';
 import { TipoImovel } from '../../interfaces/tipo-imovel';
-import { categoriasImoveis, tiposImoveis } from '../../data/enum-data';
+import { categoriasImoveis, tiposImoveis } from '../../data/enum.data';
 
 @Component({
   selector: 'app-header',

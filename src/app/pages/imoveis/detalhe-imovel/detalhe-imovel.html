@@ -1,4 +1,4 @@
-@if (imovel$ | async) {
+@if (imovel$ | async; as imovel) {
 <div class="container mx-auto p-2">
   <!-- Breadcrumb -->
   <div class="breadcrumbs mb-6 text-sm">
@@ -12,38 +12,39 @@
         <a
           [routerLink]="[
                 '/imoveis',
-                (imovel$ | async)?.tipoImovel?.categoriaImovel?.slug,
+                imovel.tipoImovel.categoriaImovel.slug,
               ]"
           class="text-primary hover:underline"
-          >{{ (imovel$ | async)?.tipoImovel?.categoriaImovel?.nome }}</a
+          >{{ imovel.tipoImovel.categoriaImovel.nome }}</a
         >
       </li>
       <li>
         <a
-          [routerLink]="['/imoveis', (imovel$ | async)?.tipoImovel?.slug]"
+          [routerLink]="['/imoveis', imovel.tipoImovel.slug]"
           class="text-primary hover:underline"
-          >{{ (imovel$ | async)?.tipoImovel?.nome }}</a
+          >{{ imovel.tipoImovel.nome }}</a
         >
       </li>
-      <li class="text-neutral">{{ (imovel$ | async)?.nomeImovel }}</li>
+      <li class="text-neutral">{{ imovel.nomeImovel }}</li>
     </ul>
   </div>
 
   <!-- Property Header -->
   <div class="mb-8">
     <h1 class="text-primary mb-2 text-3xl font-bold md:text-4xl">
-      {{ (imovel$ | async)?.nomeImovel }}
+      {{ imovel.nomeImovel }}
     </h1>
     <p class="text-neutral text-lg">
-      {{ (imovel$ | async)?.endereco }}{{ (imovel$ | async)?.numero ? ', ' + (imovel$ | async)?.numero : '' }}{{ (imovel$ | async)?.complemento ? ', ' + (imovel$ | async)?.complemento : '' }} - {{ (imovel$ | async)?.nomeBairro }}, {{
-      (imovel$ | async)?.nomeCidade }} - {{ (imovel$ | async)?.siglaEstado }}
+      {{ imovel.endereco }}{{ imovel.numero ? ', ' + imovel.numero : '' }}{{
+      imovel.complemento ? ', ' + imovel.complemento : '' }} - {{
+      imovel.nomeBairro }}, {{ imovel.nomeCidade }} - {{ imovel.siglaEstado }}
     </p>
     <div class="mt-4 flex items-center gap-4">
       <p class="text-primary text-2xl font-bold">
-        {{ (imovel$ | async)?.preco | currency: 'BRL' : 'symbol' : '1.2-2' }}
+        {{ imovel.preco | currency: 'BRL' : 'symbol' : '1.2-2' }}
       </p>
-      @if ( (imovel$ | async)?.novos) {
-        <span class="badge badge-primary badge-lg">Novo</span>
+      @if ( imovel.novos) {
+      <span class="badge badge-primary badge-lg">Novo</span>
       }
     </div>
   </div>
@@ -51,11 +52,11 @@
 <!-- Photo Gallery -->
 <div class="container mx-auto">
   <swiper-container pagination navigation>
-    @for (foto of (imovel$ | async)?.fotoImovelList; track $index) {
+    @for (foto of imovel.fotoImovelList; track $index) {
     <swiper-slide>
       <img
         [src]="foto.url"
-        [alt]="(imovel$ | async)?.nomeImovel + ' - Foto ' + ($index + 1)"
+        [alt]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
         class="h-[500px] w-full object-cover"
       />
     </swiper-slide>
@@ -74,19 +75,19 @@
         <div class="card-body">
           <h2 class="card-title mb-4 text-2xl">Descrição</h2>
           <div class="prose max-w-none">
-            <p class="whitespace-pre-line">{{ (imovel$ | async)?.descricao }}</p>
+            <p class="whitespace-pre-line">{{ imovel.descricao }}</p>
           </div>
         </div>
       </div>
 
       <!-- Features -->
-      @if ( (imovel$ | async)?.caracteristicasImovelList &&
-      (imovel$ | async)?.caracteristicasImovelList!.length > 0 ) {
+      @if ( imovel.caracteristicasImovelList &&
+      imovel.caracteristicasImovelList!.length > 0 ) {
       <div class="card bg-base-100 mb-8">
         <div class="card-body">
           <h2 class="card-title mb-4 text-2xl">Características do Imóvel</h2>
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            @for ( caracteristica of (imovel$ | async)?.caracteristicasImovelList; track
+            @for ( caracteristica of imovel.caracteristicasImovelList; track
             $index ) {
             <div class="flex items-center gap-2">
               <svg
@@ -109,15 +110,15 @@
           </div>
         </div>
       </div>
-      } @if ( (imovel$ | async)?.caracteristicasEmpreendimentoList &&
-      (imovel$ | async)?.caracteristicasEmpreendimentoList!.length > 0 ) {
+      } @if ( imovel.caracteristicasEmpreendimentoList &&
+      imovel.caracteristicasEmpreendimentoList!.length > 0 ) {
       <div class="card bg-base-100">
         <div class="card-body">
           <h2 class="card-title mb-4 text-2xl">
             Características do Empreendimento
           </h2>
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            @for ( caracteristica of (imovel$ | async)?.caracteristicasEmpreendimentoList;
+            @for ( caracteristica of imovel.caracteristicasEmpreendimentoList;
             track $index ) {
             <div class="flex items-center gap-2">
               <svg
@@ -145,7 +146,7 @@
 
     <!-- Sidebar -->
     <div>
-      <div class="card bg-neutral-50 sticky top-4 shadow-sm">
+      <div class="card sticky top-4 bg-neutral-50 shadow-sm">
         <div class="card-body">
           <h3 class="card-title mb-4 text-xl">Entre em Contato</h3>
           <p class="mb-4">
@@ -216,7 +217,8 @@
     </div>
   </div>
 </div>
-} @else {
+}
+<!-- @else if ((imovel$ | async) === null) {
 <div class="alert alert-error">
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -250,4 +252,4 @@
   </svg>
   Voltar para Imóveis
 </a>
-}
+} -->

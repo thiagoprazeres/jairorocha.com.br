@@ -8,7 +8,6 @@
     </h2>
     <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
       @for (imovel of imoveis$ | async; track imovel.id; let idx = $index) {
-
       <a
         [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.codigoReferenciaImovel]"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
@@ -16,7 +15,7 @@
       >
         <figure>
           <img
-            [src]="imovel.fotoImovelList[imovel.fotodestaque].url"
+            [src]="imovel.urlFotoDestaque"
             [alt]="imovel.nomeImovel"
             [className]="idx === 0 ? '' : 'h-48 w-full object-cover'"
           />

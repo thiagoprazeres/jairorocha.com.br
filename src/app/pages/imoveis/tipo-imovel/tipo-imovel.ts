@@ -4,7 +4,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { TipoImovel as TipoImovelInterface } from '../../../interfaces/tipo-imovel';
 import { CategoriaImovel as CategoriaImovelInterface } from '../../../interfaces/categoria-imovel';
 import { Imovel } from '../../../interfaces/imovel.interface';
-import { tiposImoveis, categoriasImoveis } from '../../../data/enum-data';
+import { tiposImoveis, categoriasImoveis } from '../../../data/enum.data';
 import { ImovelService } from '../../../services/imovel.service';
 import { map, Observable } from 'rxjs';
 import { of } from 'rxjs';
@@ -21,7 +21,7 @@ export class TipoImovel implements OnInit {
   tipo: TipoImovelInterface | undefined;
   outrosTipos: TipoImovelInterface[] = [];
   imoveis: Imovel[] | undefined;
-  // imoveis$: Observable<Imovel[]> | null = null;
+  imoveis$: Observable<Imovel[]> | null = null;
   // imoveisFiltrados: Imovel[] = [];
   filtroNovo: boolean | null = null;
   filtroVendaOuAluguel: 'todos' | 'venda' | 'aluguel' | null = null;
@@ -66,6 +66,7 @@ export class TipoImovel implements OnInit {
         this.isLoading = false;
         this.error = null;
 
+        /*
         this.imovelService.getImoveisByTipo(tipoSlug).subscribe({
           next: (imoveis) => {
             this.atualizarRegioesDisponiveis(imoveis);
@@ -81,6 +82,17 @@ export class TipoImovel implements OnInit {
             );
           },
         });
+        */
+        // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
+        this.imoveis$ = this.imovelService
+          .getAllImoveis()
+          .pipe(
+            map((imoveis) =>
+              imoveis.filter(
+                (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
+              ),
+            ),
+          );
       } else {
         this.handleError('Tipo de imóvel não encontrado');
       }

@@ -24,6 +24,7 @@ export interface Imovel {
   caracteristicasImovelList: string[];
   caracteristicasEmpreendimentoList: string[];
   urlCustom: string;
+  urlFotoDestaque: string;
   tipoImovel: TipoImovel;
   tipoPadraoImovel?: TipoPadraoImovel;
   fotoImovelList: FotoImovel[];

@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { catchError, delay, map, shareReplay } from 'rxjs/operators';
 import { Imovel } from '../interfaces/imovel.interface'; // Import the Imovel interface
 import { TipoImovelId } from '../enums/imovel.enum';
 import { ImovelSmartRequest } from '../interfaces/imovel-smart-request';
-import { tiposImoveis } from '../data/enum-data';
+import { tiposImoveis } from '../data/enum.data';
 // import { imoveis } from '../data/imoveis.data';
 import { environment } from '../../environments/environment';
 
@@ -32,12 +32,35 @@ export class ImovelService {
     };
   }
 
-  getImovelByCodigoReferenciaImovel(
+  /*getImovelByCodigoReferenciaImovel(
     codigoReferenciaImovel: string,
   ): Observable<Imovel | undefined> {
     return this.http.get<Imovel>(
       `${this.apiUrl}/imoveis/${codigoReferenciaImovel}`,
     );
+  }*/
+
+  getImovelById(
+    id: string,
+  ): Observable<Imovel> {
+    return this.http.get<Imovel>(
+      `${this.apiUrl}/imoveis/${id}`,
+    ).pipe(delay(1000));
+  }
+
+  getAllImoveis(): Observable<Imovel[]> {
+    this.allImoveis$ = this.http
+      .get<Imovel[]>(`${this.apiUrl}/imoveis`, {
+        params: {
+          quantidadeImoveis: '999',
+          tipoImovel: '1;2;3;4;5;6;7;8;9;10',
+        },
+      })
+      .pipe(
+        shareReplay(1), // Cache the result
+        catchError(this.handleError<Imovel[]>('getImoveis', [])),
+      );
+    return this.allImoveis$;
   }
 
   getImoveis(
@@ -49,30 +72,23 @@ export class ImovelService {
       quantidadeImoveis,
       ...(tipoImovel && { tipoImovel }),
     };
-
-    const cacheKey = `imoveis_${quantidadeImoveis}`;
+    const cacheKey = `imoveis_${tipoImovel}`;
 
     if (!forceRefresh && this.cache.has(cacheKey)) {
       return of(this.cache.get(cacheKey));
     }
 
-    if (!this.allImoveis$) {
-      this.allImoveis$ = this.http
-        .get<Imovel[]>(`${this.apiUrl}/imoveis`, {
-          params: {
-            quantidadeImoveis: quantidadeImoveis.toString(),
-            tipoImovel: tipoImovel?.toString() || '1;2;3;4;5;6;7;8;9;10',
-          },
-        })
-        .pipe(
-          shareReplay(1), // Cache the result
-          catchError(this.handleError<Imovel[]>('getImoveis', [])),
-        );
-    }
-
-    const result$ = this.allImoveis$.pipe(
-      map((imoveis) => imoveis.slice(0, quantidadeImoveis)),
-    );
+    const result$ = this.http
+      .get<Imovel[]>(`${this.apiUrl}/imoveis`, {
+        params: {
+          quantidadeImoveis: quantidadeImoveis.toString() || '999',
+          tipoImovel: tipoImovel?.toString() || '1;2;3;4;5;6;7;8;9;10',
+        },
+      })
+      .pipe(
+        shareReplay(1), // Cache the result
+        catchError(this.handleError<Imovel[]>('getImoveis', [])),
+      );
 
     // Cache the result
     result$.subscribe((imoveis) => {
@@ -107,10 +123,11 @@ export class ImovelService {
     );
   }
 
-  getImoveisByTipo(
+  /*getImoveisByTipo(
     tipoSlug: string,
     forceRefresh = false,
   ): Observable<Imovel[]> {
+    console.log(tipoSlug);
     const cacheKey = `imoveis_tipo_${tipoSlug}`;
 
     if (!forceRefresh && this.cache.has(cacheKey)) {
@@ -118,10 +135,8 @@ export class ImovelService {
     }
     // Converta tipoSlug para TipoImovelId
     const tipoImovelId = tiposImoveis.find((t) => t.slug === tipoSlug)?.id;
+    console.log(tipoImovelId);
     const result$ = this.getImoveis(999, tipoImovelId).pipe(
-      map((imoveis) =>
-        imoveis.filter((imovel) => imovel.tipoImovel.slug === tipoSlug),
-      ),
       catchError(this.handleError<Imovel[]>('getImoveisByTipo', [])),
     );
 
@@ -131,7 +146,7 @@ export class ImovelService {
     });
 
     return result$;
-  }
+  }*/
 
   // Clear specific cache or all cache
   clearCache(key?: string) {
