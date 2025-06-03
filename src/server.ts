@@ -14,6 +14,7 @@ export async function netlifyAppEngineHandler(
   // if (pathname === '/api/hello') {
   //   return Response.json({ message: 'Hello from the API' });
   // }
+  
 
   const result = await angularAppEngine.handle(request, context);
   return result || new Response('Not found', { status: 404 });

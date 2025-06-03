@@ -8,7 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { routes } from './app.routes';
 import {
   provideClientHydration,
-  withEventReplay,
+  withHttpTransferCacheOptions,
 } from '@angular/platform-browser';
 import { ImovelService } from './services/imovel.service';
 
@@ -23,7 +23,11 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'enabled',
       }),
     ),
-    provideClientHydration(withEventReplay()),
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      }),
+    ),
     provideHttpClient(withFetch()),
     ImovelService,
   ],
