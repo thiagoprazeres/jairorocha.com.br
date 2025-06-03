@@ -38,7 +38,7 @@ export class TipoImovel implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       this.route.params.subscribe((params: { [key: string]: string }) => {
         const tipoSlug = params['tipoSlug'];
 

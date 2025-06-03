@@ -43,7 +43,7 @@ export class DetalheImovelComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       this.route.params.subscribe((params: { [key: string]: string }) => {
         const codigoReferenciaImovel = params['id'];
 

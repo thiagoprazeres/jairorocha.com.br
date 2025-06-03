@@ -21,7 +21,7 @@ export class Home implements OnInit {
   constructor(private imovelService: ImovelService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
       this.imoveis$ = this.imovelService
         .getAllImoveis()
         .pipe(
