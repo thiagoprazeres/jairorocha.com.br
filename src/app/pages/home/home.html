@@ -9,7 +9,7 @@
     <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
       @for (imovel of imoveis$ | async; track imovel.id; let idx = $index) {
       <a
-        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.codigoReferenciaImovel]"
+        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
         [class.row-span-2]="idx === 0"
       >
