@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, isPlatformBrowser } from '@angular/common';
 import { TipoImovel as TipoImovelInterface } from '../../../interfaces/tipo-imovel';
 import { CategoriaImovel as CategoriaImovelInterface } from '../../../interfaces/categoria-imovel';
 import { Imovel } from '../../../interfaces/imovel.interface';
@@ -8,6 +8,7 @@ import { tiposImoveis, categoriasImoveis } from '../../../data/enum.data';
 import { ImovelService } from '../../../services/imovel.service';
 import { map, Observable } from 'rxjs';
 import { of } from 'rxjs';
+import { Inject, PLATFORM_ID } from '@angular/core';
 // import { imoveis } from '../../../data/imoveis.data';
 
 @Component({
@@ -33,40 +34,42 @@ export class TipoImovel implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private imovelService: ImovelService,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params: { [key: string]: string }) => {
-      const tipoSlug = params['tipoSlug'];
+    if (!isPlatformBrowser(this.platformId)) {
+      this.route.params.subscribe((params: { [key: string]: string }) => {
+        const tipoSlug = params['tipoSlug'];
 
-      // Reset state
-      this.isLoading = true;
-      this.error = null;
-      // Find the current property type
-      this.tipo = tiposImoveis.find(
-        (t: TipoImovelInterface) => t.slug === tipoSlug,
-      );
-
-      if (this.tipo) {
-        this.categoria = this.tipo.categoriaImovel;
-        // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
-        // this.imoveis$ = of(
-        //   imoveis.filter(
-        //     (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
-        //   ),
-        // );
-
-        // Get other property types in the same category
-        this.outrosTipos = tiposImoveis.filter(
-          (t: TipoImovelInterface) =>
-            t.categoriaImovel.id === this.categoria?.id &&
-            t.id !== this.tipo?.id,
+        // Reset state
+        this.isLoading = true;
+        this.error = null;
+        // Find the current property type
+        this.tipo = tiposImoveis.find(
+          (t: TipoImovelInterface) => t.slug === tipoSlug,
         );
 
-        this.isLoading = false;
-        this.error = null;
+        if (this.tipo) {
+          this.categoria = this.tipo.categoriaImovel;
+          // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
+          // this.imoveis$ = of(
+          //   imoveis.filter(
+          //     (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
+          //   ),
+          // );
 
-        /*
+          // Get other property types in the same category
+          this.outrosTipos = tiposImoveis.filter(
+            (t: TipoImovelInterface) =>
+              t.categoriaImovel.id === this.categoria?.id &&
+              t.id !== this.tipo?.id,
+          );
+
+          this.isLoading = false;
+          this.error = null;
+
+          /*
         this.imovelService.getImoveisByTipo(tipoSlug).subscribe({
           next: (imoveis) => {
             this.atualizarRegioesDisponiveis(imoveis);
@@ -83,20 +86,21 @@ export class TipoImovel implements OnInit {
           },
         });
         */
-        // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
-        this.imoveis$ = this.imovelService
-          .getAllImoveis()
-          .pipe(
-            map((imoveis) =>
-              imoveis.filter(
-                (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
+          // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
+          this.imoveis$ = this.imovelService
+            .getAllImoveis()
+            .pipe(
+              map((imoveis) =>
+                imoveis.filter(
+                  (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
+                ),
               ),
-            ),
-          );
-      } else {
-        this.handleError('Tipo de imóvel não encontrado');
-      }
-    });
+            );
+        } else {
+          this.handleError('Tipo de imóvel não encontrado');
+        }
+      });
+    }
   }
 
   // Propriedade computada para obter o texto do botão de região
