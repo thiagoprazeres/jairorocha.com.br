@@ -5,7 +5,7 @@ import { catchError, delay, map, shareReplay } from 'rxjs/operators';
 import { Imovel } from '../interfaces/imovel.interface'; // Import the Imovel interface
 import { TipoImovelId } from '../enums/imovel.enum';
 import { ImovelSmartRequest } from '../interfaces/imovel-smart-request';
-import { tiposImoveis } from '../data/enum.data';
+// import { tiposImoveis } from '../data/enum.data';
 // import { imoveis } from '../data/imoveis.data';
 import { environment } from '../../environments/environment';
 
@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class ImovelService {
-  imoveis: Imovel[] = [];
   private apiUrl = environment.apiUrl;
   private cache = new Map<string, any>();
   private allImoveis$: Observable<Imovel[]> | null = null;
@@ -40,12 +39,8 @@ export class ImovelService {
     );
   }*/
 
-  getImovelById(
-    id: string,
-  ): Observable<Imovel> {
-    return this.http.get<Imovel>(
-      `${this.apiUrl}/imoveis/${id}`,
-    ).pipe(delay(1000));
+  getImovelById(id: string): Observable<Imovel> {
+    return this.http.get<Imovel>(`${this.apiUrl}/imoveis/${id}`);
   }
 
   getAllImoveis(): Observable<Imovel[]> {

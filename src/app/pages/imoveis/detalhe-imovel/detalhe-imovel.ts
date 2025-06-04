@@ -11,7 +11,6 @@ import { ImovelService } from '../../../services/imovel.service';
 import { register } from 'swiper/element/bundle';
 import { Swiper } from 'swiper/types';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 register();
 
@@ -44,13 +43,7 @@ export class DetalheImovelComponent implements OnInit {
       const id = params['id'];
 
       // this.imovel$ = this.imovelService.getImovelById(codigoReferenciaImovel);
-      this.imovel$ = this.imovelService
-        .getAllImoveis()
-        .pipe(
-          map((imoveis: Imovel[]) =>
-            imoveis.find((imovel) => imovel.id === Number(id)),
-          ),
-        );
+      this.imovel$ = this.imovelService.getImovelById(id);
     });
   }
 }

@@ -36,7 +36,7 @@
     </p>
     <div class="mt-4 flex items-center gap-4">
       <p class="text-primary text-2xl font-bold">
-        {{ imovel.preco | currency : 'symbol' : '1.2-2' }}
+        {{ imovel.preco | currency }}
       </p>
       @if ( imovel.novos) {
       <span class="badge badge-primary badge-lg">Novo</span>
