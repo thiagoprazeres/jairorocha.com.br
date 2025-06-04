@@ -31,7 +31,7 @@
               {{ imovel.novos ? 'Novo' : 'Usado' }}
             </div>
           </h2>
-          <p>{{ imovel.preco | currency: 'BRL' }}</p>
+          <p>{{ imovel.preco | currency }}</p>
           <p>{{ imovel.nomeCidade }} - {{ imovel.siglaEstado }}</p>
           <div class="card-actions justify-end">
             @if(imovel.paraVenda){

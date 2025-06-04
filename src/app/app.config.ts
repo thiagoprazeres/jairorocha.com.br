@@ -1,4 +1,6 @@
 import {
+  DEFAULT_CURRENCY_CODE,
+  LOCALE_ID,
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
@@ -11,6 +13,10 @@ import {
   withHttpTransferCacheOptions,
 } from '@angular/platform-browser';
 import { ImovelService } from './services/imovel.service';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,5 +36,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(withFetch()),
     ImovelService,
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
   ],
 };
