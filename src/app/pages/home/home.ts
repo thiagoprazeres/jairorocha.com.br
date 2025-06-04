@@ -4,14 +4,13 @@ import { Imoveis } from '../imoveis/imoveis';
 import { Observable } from 'rxjs';
 //import { imoveis } from '../../data/imoveis.data';
 import { Imovel } from '../../interfaces/imovel.interface';
-import { RouterLink } from '@angular/router';
 import { CurrencyPipe } from '@angular/common';
 import { ImovelService } from '../../services/imovel.service';
 import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
-  imports: [Imoveis, RouterLink, AsyncPipe, CurrencyPipe],
+  imports: [Imoveis, AsyncPipe, CurrencyPipe],
   templateUrl: './home.html',
 })
 export class Home implements OnInit {

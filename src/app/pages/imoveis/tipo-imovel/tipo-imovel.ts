@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AsyncPipe, CommonModule, isPlatformBrowser } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { TipoImovel as TipoImovelInterface } from '../../../interfaces/tipo-imovel';
 import { CategoriaImovel as CategoriaImovelInterface } from '../../../interfaces/categoria-imovel';
 import { Imovel } from '../../../interfaces/imovel.interface';
-import { tiposImoveis, categoriasImoveis } from '../../../data/enum.data';
+import { tiposImoveis } from '../../../data/enum.data';
 import { ImovelService } from '../../../services/imovel.service';
 import { map, Observable } from 'rxjs';
 // import { imoveis } from '../../../data/imoveis.data';
 
 @Component({
   selector: 'app-tipo-imovel',
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule],
   templateUrl: './tipo-imovel.html',
   standalone: true,
 })
