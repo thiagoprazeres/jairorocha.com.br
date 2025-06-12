@@ -125,7 +125,7 @@
           </div>
           <div class="mt-6">
             <a
-              [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
+              [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
               class="btn btn-primary btn-block"
               >Ver Imóvel</a
             >
@@ -152,7 +152,7 @@
       @if(imoveis){ @for (imovel of imoveis.slice(6, 12);
       track imovel.id; let idx = $index) {
       <a
-        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
+        [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
       >
         <figure>

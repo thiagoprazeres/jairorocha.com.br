@@ -6,12 +6,12 @@ import { Imoveis } from '../imoveis/imoveis';
 import { Imovel } from '../../interfaces/imovel.interface';
 import { CurrencyPipe } from '@angular/common';
 import { register } from 'swiper/element/bundle';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 register();
 @Component({
   selector: 'app-home',
-  imports: [Imoveis, CurrencyPipe, RouterLink],
+  imports: [Imoveis, CurrencyPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
 })

@@ -32,6 +32,9 @@ export const routes: Routes = [
   {
     path: 'imoveis/:categoriaSlug/:tipoSlug',
     component: TipoImovel,
+    resolve: {
+      imoveis: imoveisResolver,
+    },
   },
   {
     path: 'imoveis/:categoriaSlug/:tipoSlug/:urlCustom/:id',

@@ -20,8 +20,6 @@ export class TipoImovel implements OnInit {
   tipo: TipoImovelInterface | undefined;
   outrosTipos: TipoImovelInterface[] = [];
   imoveis: Imovel[] | undefined;
-  imoveis$: Observable<Imovel[]> | null = null;
-  // imoveisFiltrados: Imovel[] = [];
   filtroNovo: boolean | null = null;
   filtroVendaOuAluguel: 'todos' | 'venda' | 'aluguel' | null = null;
   filtroRegiao: string | null = null;
@@ -48,12 +46,6 @@ export class TipoImovel implements OnInit {
 
       if (this.tipo) {
         this.categoria = this.tipo.categoriaImovel;
-        // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
-        // this.imoveis$ = of(
-        //   imoveis.filter(
-        //     (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
-        //   ),
-        // );
 
         // Get other property types in the same category
         this.outrosTipos = tiposImoveis.filter(
@@ -64,37 +56,13 @@ export class TipoImovel implements OnInit {
 
         this.isLoading = false;
         this.error = null;
-
-        /*
-        this.imovelService.getImoveisByTipo(tipoSlug).subscribe({
-          next: (imoveis) => {
-            this.atualizarRegioesDisponiveis(imoveis);
-            this.imoveis = imoveis;
-            this.isLoading = false;
-            this.setFiltroNovo(null);
-            this.setFiltroVendaOuAluguel('todos');
-          },
-          error: (error) => {
-            console.error('Error loading properties:', error);
-            this.handleError(
-              'Erro ao carregar os imóveis. Tente novamente mais tarde.',
-            );
-          },
-        });
-        */
-        // this.imoveis$ = this.imovelService.getImoveisByTipo(tipoSlug);
-        this.imoveis$ = this.imovelService
-          .getAllImoveis()
-          .pipe(
-            map((imoveis) =>
-              imoveis.filter(
-                (imovel: Imovel) => imovel.tipoImovel.id === this.tipo?.id,
-              ),
-            ),
-          );
       } else {
         this.handleError('Tipo de imóvel não encontrado');
       }
+    });
+
+    this.route.data.subscribe((data: any) => {
+      this.imoveis = data['imoveis'];
     });
   }
 

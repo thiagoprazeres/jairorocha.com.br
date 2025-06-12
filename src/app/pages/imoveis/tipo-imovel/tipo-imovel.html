@@ -139,7 +139,7 @@
               </div>
             </div>
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
-              @for (imovel of imoveis$ | async; track imovel.id) {
+              @for (imovel of imoveis; track imovel.id) {
               @if(passouFiltroNovo(imovel) && passouFiltroVendaAluguel(imovel)
               && passouFiltroRegiao(imovel)) {
               <a
