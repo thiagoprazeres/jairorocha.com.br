@@ -1,6 +1,6 @@
 <!-- Carousel -->
 <swiper-container pagination navigation>
-  @if(imoveis$ | async; as imoveis){ @for (imovel of imoveis.slice(0, 6); track
+  @if(imoveis){ @for (imovel of imoveis.slice(0, 6); track
   imovel.id; let idx = $index) {
   <swiper-slide
     [style.backgroundImage]="`url(${imovel.urlFotoDestaque})`"
@@ -125,7 +125,7 @@
           </div>
           <div class="mt-6">
             <a
-              [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
+              [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
               class="btn btn-primary btn-block"
               >Ver Imóvel</a
             >
@@ -149,10 +149,10 @@
       Lançamentos
     </h2>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      @if(imoveis$ | async; as imoveis){ @for (imovel of imoveis.slice(6, 12);
+      @if(imoveis){ @for (imovel of imoveis.slice(6, 12);
       track imovel.id; let idx = $index) {
       <a
-        [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
+        [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
       >
         <figure>

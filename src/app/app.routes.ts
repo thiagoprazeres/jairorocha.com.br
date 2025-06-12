@@ -6,11 +6,16 @@ import { CategoriaImovel } from './pages/imoveis/categoria-imovel/categoria-imov
 import { Contato } from './pages/contato/contato';
 import { TipoImovel } from './pages/imoveis/tipo-imovel/tipo-imovel';
 import { DetalheImovelComponent } from './pages/imoveis/detalhe-imovel/detalhe-imovel';
+import { imoveisResolver } from './resolvers/imoveis-resolver';
+import { imovelResolver } from './resolvers/imovel-resolver';
 
 export const routes: Routes = [
   {
     path: '',
     component: Home,
+    resolve: {
+      imoveis: imoveisResolver,
+    },
   },
   {
     path: 'sobre-nos',
@@ -31,6 +36,9 @@ export const routes: Routes = [
   {
     path: 'imoveis/:categoriaSlug/:tipoSlug/:urlCustom/:id',
     component: DetalheImovelComponent,
+    resolve: {
+      imovel: imovelResolver,
+    },
   },
   {
     path: 'contato',
