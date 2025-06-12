@@ -10,6 +10,9 @@ export interface Imovel {
   endereco: string;
   numero: string;
   areaterreno: string;
+  nquartos: string;
+  nsuites: string;
+  ngaragens: string;
   fotodestaque: number;
   localizacao: string;
   complemento: string;
