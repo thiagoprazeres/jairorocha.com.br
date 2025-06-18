@@ -1,14 +1,16 @@
 <!-- Carousel -->
 <swiper-container pagination navigation>
-  @if(imoveis){ @for (imovel of imoveis.slice(0, 6); track
-  imovel.id; let idx = $index) {
+  @if(imoveis){ @for (imovel of imoveis.slice(0, 6); track imovel.id; let idx =
+  $index) {
   <swiper-slide
     [style.backgroundImage]="`url(${imovel.urlFotoDestaque})`"
     class="h-[600px] bg-cover"
   >
-    <div class="flex h-full items-center justify-center px-2 md:px-0">
-      <div class="card w-96 bg-white/90 shadow-none backdrop-blur-xs">
-        <div class="card-body">
+    <div class="mx-auto flex h-full max-w-7xl items-end justify-start">
+      <div
+        class="card mb-8 ml-4 w-2/3 max-w-72 bg-white/90 shadow-none backdrop-blur-xs"
+      >
+        <div class="card-body p-5">
           <div class="flex gap-1">
             <span class="badge badge-xs badge-primary"
               >{{imovel.tipoImovel.nome}}</span
@@ -17,10 +19,8 @@
               >{{imovel.paraVenda ? 'Venda' : 'Aluguel'}}</span
             >
           </div>
-          <div class="flex justify-between">
-            <h2 class="text-3xl font-bold">{{imovel.nomeImovel}}</h2>
-            <span class="text-xl">{{imovel.preco | currency}}</span>
-          </div>
+          <h2 class="text-base font-bold">{{imovel.nomeImovel}}</h2>
+          <span class="text-base">{{imovel.preco | currency}}</span>
           <div class="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,6 @@
               />
             </svg>
             <p>
-              {{imovel.endereco}}{{imovel.numero ? ', ' + imovel.numero :
-              ''}}{{imovel.complemento ? ', ' + imovel.complemento : ''}}
               {{imovel.nomeBairro}}, {{imovel.nomeCidade}} -
               {{imovel.siglaEstado}}
             </p>
@@ -123,7 +121,7 @@
             </div>
             }
           </div>
-          <div class="mt-6">
+          <div class="mt-1">
             <a
               [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
               class="btn btn-primary btn-block"
@@ -149,8 +147,8 @@
       Lançamentos
     </h2>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      @if(imoveis){ @for (imovel of imoveis.slice(6, 12);
-      track imovel.id; let idx = $index) {
+      @if(imoveis){ @for (imovel of imoveis.slice(6, 12); track imovel.id; let
+      idx = $index) {
       <a
         [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"

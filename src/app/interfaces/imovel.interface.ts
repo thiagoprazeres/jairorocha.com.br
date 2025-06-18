@@ -14,6 +14,8 @@ export interface Imovel {
   nsuites: string;
   ngaragens: string;
   fotodestaque: number;
+  destaque: string;
+  destaquebanner: string;
   localizacao: string;
   complemento: string;
   descricao: string;
