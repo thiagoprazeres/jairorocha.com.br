@@ -1,5 +1,5 @@
 @if (imovel) {
-<div class="container mx-auto p-2">
+<div class="container mx-auto p-4">
   <!-- Breadcrumb -->
   <div class="breadcrumbs mb-6 text-sm">
     <ul>
@@ -45,14 +45,14 @@
   </div>
 </div>
 <!-- Photo Gallery -->
-<div class="container mx-auto">
+<div>
   <swiper-container pagination navigation>
     @for (foto of imovel.fotoImovelList; track $index) {
-    <swiper-slide>
+    <swiper-slide class="flex h-auto max-h-[800px] items-center justify-center">
       <img
         [src]="foto.url"
         [alt]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
-        class="max-h-[800px] w-full object-cover"
+        class="h-full w-full object-cover"
       />
     </swiper-slide>
     }
@@ -61,80 +61,69 @@
     <swiper-button-next></swiper-button-next>
   </swiper-container>
 </div>
-<div class="container mx-auto p-2">
+<div class="container mx-auto p-4">
   <!-- Property Details -->
   <div class="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-3">
     <!-- Main Content -->
     <div class="lg:col-span-2">
-      <div class="card bg-base-100 mb-8">
-        <div class="card-body">
-          <h2 class="card-title mb-4 text-2xl">Descrição</h2>
-          <div class="prose max-w-none">
-            <p class="whitespace-pre-line">{{ imovel.descricao }}</p>
-          </div>
-        </div>
+      @if(imovel.descricao){
+      <div class="mb-12">
+        <h2 class="card-title mb-4 text-2xl">Descrição</h2>
+        <div class="prose max-w-none" [innerHTML]="imovel.descricao"></div>
       </div>
-
+      }
       <!-- Features -->
       @if ( imovel.caracteristicasImovelList &&
       imovel.caracteristicasImovelList!.length > 0 ) {
-      <div class="card bg-base-100 mb-8">
-        <div class="card-body">
-          <h2 class="card-title mb-4 text-2xl">Características do Imóvel</h2>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            @for ( caracteristica of imovel.caracteristicasImovelList; track
-            $index ) {
-            <div class="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-primary h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>{{ caracteristica }}</span>
-            </div>
-            }
-          </div>
+      <h2 class="card-title mb-4 text-2xl">Características do Imóvel</h2>
+      <div class="mb-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+        @for ( caracteristica of imovel.caracteristicasImovelList; track $index
+        ) {
+        <div class="flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="text-primary h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          <span>{{ caracteristica }}</span>
         </div>
+        }
       </div>
       } @if ( imovel.caracteristicasEmpreendimentoList &&
       imovel.caracteristicasEmpreendimentoList!.length > 0 ) {
-      <div class="card bg-base-100">
-        <div class="card-body">
-          <h2 class="card-title mb-4 text-2xl">
-            Características do Empreendimento
-          </h2>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            @for ( caracteristica of imovel.caracteristicasEmpreendimentoList;
-            track $index ) {
-            <div class="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-primary h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-              <span>{{ caracteristica }}</span>
-            </div>
-            }
-          </div>
+      <h2 class="card-title mb-4 text-2xl">
+        Características do Empreendimento
+      </h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        @for ( caracteristica of imovel.caracteristicasEmpreendimentoList; track
+        $index ) {
+        <div class="flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="text-primary h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+          <span>{{ caracteristica }}</span>
         </div>
+        }
       </div>
       }
     </div>

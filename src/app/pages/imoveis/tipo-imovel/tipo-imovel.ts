@@ -5,9 +5,6 @@ import { TipoImovel as TipoImovelInterface } from '../../../interfaces/tipo-imov
 import { CategoriaImovel as CategoriaImovelInterface } from '../../../interfaces/categoria-imovel';
 import { Imovel } from '../../../interfaces/imovel.interface';
 import { tiposImoveis } from '../../../data/enum.data';
-import { ImovelService } from '../../../services/imovel.service';
-import { map, Observable } from 'rxjs';
-// import { imoveis } from '../../../data/imoveis.data';
 
 @Component({
   selector: 'app-tipo-imovel',
@@ -21,16 +18,15 @@ export class TipoImovel implements OnInit {
   outrosTipos: TipoImovelInterface[] = [];
   imoveis: Imovel[] | undefined;
   filtroNovo: boolean | null = null;
-  filtroVendaOuAluguel: 'todos' | 'venda' | 'aluguel' | null = null;
+  filtroVendaOuAluguel: 'venda' | 'aluguel' | null = null;
   filtroRegiao: string | null = null;
+  filtroQuartos: string | null = null;
   regioesDisponiveis: string[] = [];
+  quartosDisponiveis: string[] = [];
   isLoading = false;
   error: string | null = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private imovelService: ImovelService,
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: { [key: string]: string }) => {
@@ -63,6 +59,8 @@ export class TipoImovel implements OnInit {
 
     this.route.data.subscribe((data: any) => {
       this.imoveis = data['imoveis'];
+      this.atualizarRegioesDisponiveis(this.imoveis || []);
+      this.atualizarQuartosDisponiveis(this.imoveis || []);
     });
   }
 
@@ -72,13 +70,19 @@ export class TipoImovel implements OnInit {
     return this.filtroRegiao; // Retorna apenas o nome da cidade
   }
 
+  get textoFiltroQuartos(): string {
+    if (!this.filtroQuartos) return 'Nº de quartos';
+    return this.filtroQuartos;
+  }
+
   // Filtra os imóveis com base nos filtros ativos
   get imoveisFiltrados(): Imovel[] | undefined {
     return this.imoveis?.filter(
       (imovel: Imovel) =>
         this.passouFiltroNovo(imovel) &&
         this.passouFiltroVendaAluguel(imovel) &&
-        this.passouFiltroRegiao(imovel),
+        this.passouFiltroRegiao(imovel) &&
+        this.passouFiltroQuartos(imovel),
     );
   }
 
@@ -89,7 +93,7 @@ export class TipoImovel implements OnInit {
 
   // Verifica se o imóvel passa no filtro de venda/aluguel
   passouFiltroVendaAluguel(imovel: Imovel): boolean {
-    if (this.filtroVendaOuAluguel === 'todos') return true;
+    if (!this.filtroVendaOuAluguel) return true;
     if (this.filtroVendaOuAluguel === 'venda') return imovel.paraVenda === true;
     if (this.filtroVendaOuAluguel === 'aluguel')
       return imovel.paraLocacao === true;
@@ -100,6 +104,12 @@ export class TipoImovel implements OnInit {
   passouFiltroRegiao(imovel: Imovel): boolean {
     if (!this.filtroRegiao) return true;
     return imovel.nomeCidade.toLowerCase() === this.filtroRegiao.toLowerCase();
+  }
+
+  // Verifica se o imóvel passa no filtro de região
+  passouFiltroQuartos(imovel: Imovel): boolean {
+    if (!this.filtroQuartos) return true;
+    return imovel.nquartos === this.filtroQuartos;
   }
 
   // Atualiza a lista de cidades disponíveis com base nos imóveis
@@ -117,20 +127,40 @@ export class TipoImovel implements OnInit {
     );
   }
 
+  // Atualiza a lista de cidades disponíveis com base nos imóveis
+  private atualizarQuartosDisponiveis(imoveis: Imovel[]): void {
+    const quartos = new Set<string>();
+
+    imoveis.forEach((imovel) => {
+      if (imovel.nquartos) {
+        quartos.add(imovel.nquartos);
+      }
+    });
+
+    this.quartosDisponiveis = Array.from(quartos).sort(
+      (a, b) => Number(a) - Number(b),
+    );
+  }
+
   // Define o filtro de região
   setFiltroRegiao(regiao: string | null): void {
     this.filtroRegiao = regiao;
   }
 
+  setFiltroQuartos(quarto: string | null): void {
+    console.log(quarto);
+    this.filtroQuartos = quarto;
+  }
+
   setFiltroNovo(valor: boolean | null) {
     console.log(valor);
     if (valor === true && this.filtroVendaOuAluguel === 'aluguel') {
-      this.setFiltroVendaOuAluguel('todos');
+      this.setFiltroVendaOuAluguel(null);
     }
     this.filtroNovo = valor;
   }
 
-  setFiltroVendaOuAluguel(valor: 'todos' | 'venda' | 'aluguel') {
+  setFiltroVendaOuAluguel(valor: null | 'venda' | 'aluguel') {
     if (valor === 'aluguel' && this.filtroNovo === true) {
       this.setFiltroNovo(null);
     }

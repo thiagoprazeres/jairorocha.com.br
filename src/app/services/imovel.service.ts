@@ -56,4 +56,13 @@ export class ImovelService {
       );
     return this.allImoveis$;
   }
+
+  findByTipoImovel(
+    tipoImovelId: TipoImovelId | undefined,
+  ): Observable<Imovel[]> {
+    const idTipoImovel = tipoImovelId?.toString() || '1;2;3;4;5;6;7;8;9;10';
+    return this.http.get<Imovel[]>(
+      `${this.apiUrl}/imoveis/tipoImovel/${idTipoImovel}`,
+    );
+  }
 }

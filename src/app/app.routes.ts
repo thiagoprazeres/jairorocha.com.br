@@ -8,6 +8,7 @@ import { TipoImovel } from './pages/imoveis/tipo-imovel/tipo-imovel';
 import { DetalheImovelComponent } from './pages/imoveis/detalhe-imovel/detalhe-imovel';
 import { imoveisResolver } from './resolvers/imoveis-resolver';
 import { imovelResolver } from './resolvers/imovel-resolver';
+import { tipoImovelResolver } from './resolvers/tipo-imovel-resolver';
 
 export const routes: Routes = [
   {
@@ -33,7 +34,7 @@ export const routes: Routes = [
     path: 'imoveis/:categoriaSlug/:tipoSlug',
     component: TipoImovel,
     resolve: {
-      imoveis: imoveisResolver,
+      imoveis: tipoImovelResolver,
     },
   },
   {
