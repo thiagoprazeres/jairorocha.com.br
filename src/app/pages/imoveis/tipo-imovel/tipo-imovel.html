@@ -82,6 +82,7 @@
                 </div>
 
                 <!-- Filtro por Região -->
+                @if(regioesDisponiveis.length > 1){
                 <div class="dropdown dropdown-end">
                   <button tabindex="0" class="btn btn-sm">
                     <svg
@@ -123,12 +124,13 @@
                   <ul
                     tabindex="0"
                     class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
+                    id="filtroRegiaoList"
                   >
-                    <li (click)="setFiltroRegiao(null)">
+                    <li (click)="setFiltroRegiao(null); fecharDropdown($event)">
                       <a [class.active]="!filtroRegiao">Todas as cidades</a>
                     </li>
                     @for (cidade of regioesDisponiveis; track cidade) {
-                    <li (click)="setFiltroRegiao(cidade)">
+                    <li (click)="setFiltroRegiao(cidade); fecharDropdown($event)">
                       <a [class.active]="filtroRegiao === cidade">
                         {{ cidade }}, PE
                       </a>
@@ -136,8 +138,10 @@
                     }
                   </ul>
                 </div>
+                }
 
                 <!-- Filtro por Número de Quartos -->
+                @if(quartosDisponiveis.length > 1){
                 <div class="dropdown dropdown-end">
                   <button tabindex="0" class="btn btn-sm">
                     <svg
@@ -176,12 +180,13 @@
                   <ul
                     tabindex="0"
                     class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
+                    id="filtroQuartosList"
                   >
-                    <li (click)="setFiltroQuartos(null)">
+                    <li (click)="setFiltroQuartos(null); fecharDropdown($event)">
                       <a [class.active]="!filtroQuartos">Todas</a>
                     </li>
                     @for (quarto of quartosDisponiveis; track quarto) {
-                    <li (click)="setFiltroQuartos(quarto)">
+                    <li (click)="setFiltroQuartos(quarto); fecharDropdown($event)">
                       <a [class.active]="filtroQuartos === quarto">
                         {{ quarto }}
                       </a>
@@ -189,6 +194,7 @@
                     }
                   </ul>
                 </div>
+                }
               </div>
             </div>
 

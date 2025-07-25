@@ -30,6 +30,7 @@
           tabindex="0"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
+          <li><a href="/">Home</a></li>
           <li><a href="/sobre-nos">Sobre nós</a></li>
           @for (categoria of categorias; track categoria.id) {
           <li>
@@ -61,6 +62,7 @@
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
+        <li><a href="/">Home</a></li>
         <li><a href="/sobre-nos">Sobre nós</a></li>
         @for (categoria of categorias; track categoria.id) {
         <li>
@@ -89,9 +91,9 @@
       <a
         href="https://api.whatsapp.com/send?phone=5581992589544&text=Ol%C3%A1,%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es"
         target="_blank"
-        class="btn bg-[#25D366] relative pulse-ring"
+        class="btn pulse-ring relative bg-[#25D366]"
         title="WhatsApp: (81) 99258-9544"
-        >
+      >
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -117,7 +119,7 @@
             ></path>
           </g>
         </svg>
-        <span class="hidden lg:flex text-white">(81) 99258-9544</span>
+        <span class="hidden text-white lg:flex">(81) 99258-9544</span>
       </a>
     </div>
   </div>

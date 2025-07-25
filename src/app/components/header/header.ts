@@ -8,6 +8,7 @@ import { categoriasImoveis, tiposImoveis } from '../../data/enum.data';
   selector: 'app-header',
   imports: [RouterLink],
   templateUrl: './header.html',
+  styleUrls: ['./header.css'],
 })
 export class Header {
   categorias: CategoriaImovel[] = [];

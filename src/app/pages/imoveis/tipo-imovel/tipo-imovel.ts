@@ -167,6 +167,11 @@ export class TipoImovel implements OnInit {
     this.filtroVendaOuAluguel = valor;
   }
 
+  fecharDropdown(event: MouseEvent | PointerEvent): void {
+    document.getElementById("filtroRegiaoList")?.blur();
+    document.getElementById("filtroQuartosList")?.blur();
+  }
+
   private handleError(message: string) {
     this.error = message;
     this.isLoading = false;
