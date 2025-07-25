@@ -1,11 +1,5 @@
 import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
-import { routes } from './app.routes';
 import { categoriasImoveis, tiposImoveis } from './data/enum.data';
-import { codigosReferencia } from './data/codigos-referencia';
-import { map } from 'rxjs/operators';
-import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ImovelService } from './services/imovel.service';
 import { ids } from './data/ids';
 
 // Function to get all possible paths for prerendering
