@@ -14,6 +14,7 @@ register();
   imports: [CurrencyPipe, Imoveis],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
+  styleUrl: './home.css',
 })
 export class Home implements OnInit {
   spaceBetween = 10;
