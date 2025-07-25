@@ -30,7 +30,7 @@
           tabindex="0"
           class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
         >
-          <li><a routerLink="/sobre-nos">Sobre nós</a></li>
+          <li><a href="/sobre-nos">Sobre nós</a></li>
           @for (categoria of categorias; track categoria.id) {
           <li>
             @if (getTiposByCategoria(categoria.id).length > 0) {
@@ -40,7 +40,7 @@
                 @for (tipo of getTiposByCategoria(categoria.id); track tipo.id)
                 {
                 <li>
-                  <a [routerLink]="['/imoveis', categoria.slug, tipo.slug]"
+                  <a [href]="`/imoveis/${categoria.slug}/${tipo.slug}`"
                     >{{ tipo.nome }}</a
                   >
                 </li>
@@ -48,13 +48,11 @@
               </ul>
             </details>
             } @else {
-            <a [routerLink]="['/imoveis', categoria.slug]"
-              >{{ categoria.nome }}</a
-            >
+            <a [href]="`/imoveis/${categoria.slug}`">{{ categoria.nome }}</a>
             }
           </li>
           }
-          <li><a routerLink="/contato">Contato</a></li>
+          <li><a href="/contato">Contato</a></li>
         </ul>
       </div>
       <a routerLink="/"
@@ -63,7 +61,7 @@
     </div>
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><a routerLink="/sobre-nos">Sobre nós</a></li>
+        <li><a href="/sobre-nos">Sobre nós</a></li>
         @for (categoria of categorias; track categoria.id) {
         <li>
           @if (getTiposByCategoria(categoria.id).length > 0) {
@@ -72,7 +70,7 @@
             <ul class="p-2">
               @for (tipo of getTiposByCategoria(categoria.id); track tipo.id) {
               <li>
-                <a [routerLink]="['/imoveis', categoria.slug, tipo.slug]"
+                <a [href]="`/imoveis/${categoria.slug}/${tipo.slug}`"
                   >{{ tipo.nome }}</a
                 >
               </li>
@@ -80,22 +78,20 @@
             </ul>
           </details>
           } @else {
-          <a [routerLink]="['/imoveis', categoria.slug]"
-            >{{ categoria.nome }}</a
-          >
+          <a [href]="`/imoveis/${categoria.slug}`">{{ categoria.nome }}</a>
           }
         </li>
         }
-        <li><a routerLink="/contato">Contato</a></li>
+        <li><a href="/contato">Contato</a></li>
       </ul>
     </div>
     <div class="navbar-end">
       <a
         href="https://api.whatsapp.com/send?phone=5581992589544&text=Ol%C3%A1,%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es"
         target="_blank"
-        class="btn btn-primary"
+        class="btn bg-[#25D366] relative pulse-ring"
         title="WhatsApp: (81) 99258-9544"
-      >
+        >
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -121,7 +117,7 @@
             ></path>
           </g>
         </svg>
-        <span class="hidden lg:flex">(81) 99258-9544</span>
+        <span class="hidden lg:flex text-white">(81) 99258-9544</span>
       </a>
     </div>
   </div>

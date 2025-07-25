@@ -1,4 +1,18 @@
 @import "tailwindcss";
+
+/* Bank Gothic font */
+@font-face {
+  font-family: "BankGothic";
+  src: url("/fonts/Bank-Gothic-Font/BankGothicMediumBT.ttf") format("truetype"),
+       url("/fonts/Bank-Gothic-Font/BankGothic Md BT.ttf") format("truetype"),
+       url("/fonts/Bank-Gothic-Font/bankgothic-regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+h1, h2, .title {
+  font-family: "BankGothic", sans-serif;
+}
+
 @plugin "daisyui" {
   themes: false;
 }
@@ -40,4 +54,34 @@
 
 swiper-container {
   --swiper-theme-color: #fefefe;
+}
+
+/* Pulse ring animation for highlight */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 3px solid #25D366;
+  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  pointer-events: none;
 }

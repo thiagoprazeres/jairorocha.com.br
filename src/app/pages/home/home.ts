@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 register();
 @Component({
   selector: 'app-home',
-  imports: [Imoveis, CurrencyPipe],
+  imports: [CurrencyPipe, Imoveis],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
 })
