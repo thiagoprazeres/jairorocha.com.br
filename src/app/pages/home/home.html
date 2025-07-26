@@ -1,6 +1,6 @@
 <!-- Carousel -->
 <swiper-container pagination navigation autoplay>
-  @if(imoveis){ @for (imovel of imoveis.slice(0, 6); track imovel.id; let idx =
+  @if(imoveis){ @for (imovel of imoveisDestaqueBanner; track imovel.id; let idx =
   $index) {
   <swiper-slide
     [style.backgroundImage]="`url(${imovel.urlFotoDestaque})`"
@@ -147,7 +147,7 @@
       Lançamentos
     </h2>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      @if(imoveis){ @for (imovel of imoveis.slice(6, 12); track imovel.id; let
+      @if(imoveis){ @for (imovel of imoveisDestaque; track imovel.id; let
       idx = $index) {
       <a
         [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
