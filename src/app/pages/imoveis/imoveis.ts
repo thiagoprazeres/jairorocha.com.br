@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-imoveis',
   imports: [],
   templateUrl: './imoveis.html',
+  styleUrls: ['./imoveis.css'],
 })
 export class Imoveis {}
