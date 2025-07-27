@@ -32,12 +32,13 @@ export class Home implements OnInit {
         ) || null;
       this.imoveisDestaqueBanner =
         data['imoveis'].filter(
-          (imovel: Imovel) => imovel.destaquebanner === '1',
+          (imovel: Imovel) =>
+            imovel.urlFotoDestaque !== '' && imovel.destaquebanner === '1',
         ) || null;
       this.imoveisDestaque =
         data['imoveis'].filter(
           (imovel: Imovel) =>
-            imovel.destaque === '1' || imovel.destaquebanner === '0',
+            imovel.urlFotoDestaque !== '' && imovel.destaque === '1',
         ) || null;
     });
   }

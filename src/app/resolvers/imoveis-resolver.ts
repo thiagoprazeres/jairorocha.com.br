@@ -5,5 +5,5 @@ import { ImovelService } from '../services/imovel.service';
 
 export const imoveisResolver: ResolveFn<Imovel[]> = (route, state) => {
   const imovelService = inject(ImovelService);
-  return imovelService.getAllImoveis();
+  return imovelService.findByDestaqueNoBanner(true);
 };

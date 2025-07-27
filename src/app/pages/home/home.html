@@ -1,7 +1,7 @@
 <!-- Carousel -->
 <swiper-container navigation autoplay>
-  @if(imoveis){ @for (imovel of imoveisDestaqueBanner; track imovel.id; let idx =
-  $index) {
+  @if(imoveis){ @for (imovel of imoveisDestaqueBanner; track imovel.id; let idx
+  = $index) {
   <swiper-slide
     [style.backgroundImage]="`url(${imovel.urlFotoDestaque})`"
     class="h-[600px] bg-cover"
@@ -12,15 +12,22 @@
       >
         <div class="card-body p-5">
           <div class="flex gap-1">
-            <span class="badge badge-xs badge-primary"
+            <span class="badge badge-xs badge-secondary truncate"
               >{{imovel.tipoImovel.nome}}</span
             >
-            <span class="badge badge-xs badge-secondary"
-              >{{imovel.paraVenda ? 'Venda' : 'Aluguel'}}</span
-            >
+            @if(imovel.paraVenda && imovel.novos) {
+            <span class="badge badge-xs badge-primary">Lançamento</span>
+            } @else if (imovel.paraVenda && imovel.usados) {
+            <span class="badge badge-xs badge-neutral">Revenda</span>
+            } @else if(imovel.paraLocacao){
+            <span class="badge badge-xs badge-outline">Locação</span>
+            }
           </div>
           <h2 class="text-base font-bold">{{imovel.nomeImovel}}</h2>
-          <span class="text-base">{{imovel.preco | currency}}</span>
+          <span class="text-base"
+            >{{(imovel.paraVenda ? imovel.preco : imovel.precoLocacao) |
+            currency}}</span
+          >
           <div class="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +49,7 @@
                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            <p>
+            <p class="truncate">
               {{imovel.nomeBairro}}, {{imovel.nomeCidade}} -
               {{imovel.siglaEstado}}
             </p>
@@ -141,14 +148,12 @@
 <app-imoveis />
 
 <!-- Lançamentos Section -->
-<section class="bg-neutral-50 py-10 w-full">
+<section class="w-full bg-neutral-50 py-10">
   <div class="container mx-auto px-4">
-    <h2 class="text-black mb-10 text-center text-4xl font-bold">
-      Lançamentos
-    </h2>
+    <h2 class="mb-10 text-center text-4xl font-bold text-black">Lançamentos</h2>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      @if(imoveis){ @for (imovel of imoveisDestaque; track imovel.id; let
-      idx = $index) {
+      @if(imoveis){ @for (imovel of imoveisDestaque; track imovel.id; let idx =
+      $index) {
       <a
         [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
         class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
@@ -164,13 +169,12 @@
           <h3 class="text-primary font-semibold">
             {{ imovel.tipoImovel.nome }}
           </h3>
-          <h2 class="card-title">
-            {{ imovel.nomeImovel }}
-            <div class="badge badge-secondary">
-              {{ imovel.novos ? 'Lançamento' : 'Revenda' }}
-            </div>
-          </h2>
+          <h2 class="card-title">{{ imovel.nomeImovel }}</h2>
+          @if(imovel.paraVenda && imovel.preco > 0){
           <p>{{ imovel.preco | currency }}</p>
+          } @if(imovel.paraLocacao && imovel.precoLocacao > 0){
+          <p>{{ imovel.precoLocacao | currency }}</p>
+          }
           <p>
             {{ imovel.nomeBairro}}, {{ imovel.nomeCidade }} - {{
             imovel.siglaEstado }}
@@ -250,11 +254,13 @@
             }
           </div>
           <div class="card-actions justify-end">
-            @if(imovel.paraVenda){
-            <div class="badge badge-outline">Venda</div>
+            @if(imovel.novos){
+            <div class="badge badge-primary">Lançamento</div>
+            } @else if(imovel.usados){ @if(imovel.paraVenda){
+            <div class="badge badge-secondary">Revenda</div>
             } @if(imovel.paraLocacao){
-            <div class="badge badge-outline">Aluguel</div>
-            }
+            <div class="badge badge-outline">Locação</div>
+            } }
           </div>
         </div>
       </a>

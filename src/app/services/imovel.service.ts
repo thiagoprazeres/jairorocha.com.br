@@ -57,6 +57,16 @@ export class ImovelService {
     return this.allImoveis$;
   }
 
+  findByDestaqueNoBanner(destaqueOrDestaqueNoBanner: boolean): Observable<Imovel[]> {
+    this.allImoveis$ = this.http
+      .get<Imovel[]>(`${this.apiUrl}/imoveis/destaqueNoBanner/${destaqueOrDestaqueNoBanner}`)
+      .pipe(
+        shareReplay(1), // Cache the result
+        catchError(this.handleError<Imovel[]>('getImoveis', [])),
+      );
+    return this.allImoveis$;
+  }
+
   findByTipoImovel(
     tipoImovelId: TipoImovelId | undefined,
   ): Observable<Imovel[]> {

@@ -7,6 +7,7 @@ export interface Imovel {
   codigoReferenciaImovel: string;
   nomeImovel: string;
   preco: number;
+  precoLocacao: number;
   endereco: string;
   numero: string;
   areaterreno: string;

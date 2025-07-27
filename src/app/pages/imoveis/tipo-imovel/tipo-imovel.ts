@@ -66,12 +66,12 @@ export class TipoImovel implements OnInit {
 
   // Propriedade computada para obter o texto do botão de região
   get textoFiltroRegiao(): string {
-    if (!this.filtroRegiao) return 'Todas as cidades';
+    if (!this.filtroRegiao) return 'Cidades';
     return this.filtroRegiao; // Retorna apenas o nome da cidade
   }
 
   get textoFiltroQuartos(): string {
-    if (!this.filtroQuartos) return 'Nº de quartos';
+    if (!this.filtroQuartos) return 'Quartos';
     return this.filtroQuartos;
   }
 

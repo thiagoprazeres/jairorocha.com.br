@@ -123,14 +123,16 @@
                   </button>
                   <ul
                     tabindex="0"
-                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
+                    class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 text-nowrap shadow"
                     id="filtroRegiaoList"
                   >
                     <li (click)="setFiltroRegiao(null); fecharDropdown($event)">
                       <a [class.active]="!filtroRegiao">Todas as cidades</a>
                     </li>
                     @for (cidade of regioesDisponiveis; track cidade) {
-                    <li (click)="setFiltroRegiao(cidade); fecharDropdown($event)">
+                    <li
+                      (click)="setFiltroRegiao(cidade); fecharDropdown($event)"
+                    >
                       <a [class.active]="filtroRegiao === cidade">
                         {{ cidade }}, PE
                       </a>
@@ -182,11 +184,15 @@
                     class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
                     id="filtroQuartosList"
                   >
-                    <li (click)="setFiltroQuartos(null); fecharDropdown($event)">
+                    <li
+                      (click)="setFiltroQuartos(null); fecharDropdown($event)"
+                    >
                       <a [class.active]="!filtroQuartos">Todas</a>
                     </li>
                     @for (quarto of quartosDisponiveis; track quarto) {
-                    <li (click)="setFiltroQuartos(quarto); fecharDropdown($event)">
+                    <li
+                      (click)="setFiltroQuartos(quarto); fecharDropdown($event)"
+                    >
                       <a [class.active]="filtroQuartos === quarto">
                         {{ quarto }}
                       </a>
@@ -200,16 +206,35 @@
 
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
               @for (imovel of imoveisFiltrados; track imovel.id) {
-
               <a
                 [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
-                class="card bg-base-100 relative shadow-xl transition-shadow duration-300 hover:shadow-2xl"
+                class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
-                @if (imovel.novos) {
-                <div class="badge badge-primary absolute top-2 right-2 z-10">
+                @if(imovel.novos){
+                <div
+                  class="badge badge-xs badge-primary absolute top-2 right-2 z-10"
+                >
                   Lançamento
                 </div>
-                }
+                } @else if(imovel.usados){ @if(imovel.paraVenda){
+                <div
+                  class="badge badge-xs badge-secondary absolute top-2 right-2 z-10"
+                >
+                  Revenda
+                </div>
+                @if(imovel.paraLocacao){
+                <div
+                  class="badge badge-xs badge-outline absolute top-7 right-2 z-10"
+                >
+                  Locação
+                </div>
+                } } @else if(imovel.paraLocacao){
+                <div
+                  class="badge badge-xs badge-outline absolute top-2 right-2 z-10"
+                >
+                  Locação
+                </div>
+                } }
                 <figure>
                   @if (imovel.urlFotoDestaque) {
                   <img
@@ -225,15 +250,16 @@
                   </div>
                   }
                 </figure>
-                <div class="card-body p-4">
-                  <h3 class="card-title text-lg">{{ imovel.nomeImovel }}</h3>
-                  <p class="text-neutral mb-2 text-sm">
-                    {{ imovel.endereco }}{{ imovel.numero ? ', ' + imovel.numero
-                    : '' }} - {{ imovel.nomeBairro }}, {{ imovel.nomeCidade +' -
-                    '+imovel.siglaEstado}}
-                  </p>
-                  <p class="text-primary mb-2 text-lg font-bold">
-                    {{ imovel.preco | currency:'BRL':'symbol':'1.2-2' }}
+                <div class="card-body">
+                  <h2 class="card-title">{{ imovel.nomeImovel }}</h2>
+                  @if(imovel.paraVenda && imovel.preco > 0){
+                  <p>{{ imovel.preco | currency }}</p>
+                  } @if(imovel.paraLocacao && imovel.precoLocacao > 0){
+                  <p>{{ imovel.precoLocacao | currency }}</p>
+                  }
+                  <p>
+                    {{ imovel.nomeBairro}}, {{ imovel.nomeCidade }} - {{
+                    imovel.siglaEstado }}
                   </p>
                   <div class="flex items-center gap-4">
                     @if(imovel.areaterreno.trim()){
@@ -308,9 +334,6 @@
                       <p>{{imovel.ngaragens}}</p>
                     </div>
                     }
-                  </div>
-                  <div class="card-actions justify-end">
-                    <!-- <a class="btn btn-primary btn-sm">Ver detalhes</a> -->
                   </div>
                 </div>
               </a>
