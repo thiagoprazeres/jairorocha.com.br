@@ -103,6 +103,13 @@ export const tiposImoveis: TipoImovel[] = [
     slug: 'restaurante-lanchonete',
     categoriaImovel: categoriasImoveis[CategoriaImovelId.Comercial],
   },
+  {
+    id: TipoImovelId.TerrenoLoteamento,
+    nome: 'Terreno, loteamento',
+    descricao: 'Terrenos para construção ou loteamentos comerciais.',
+    slug: 'terreno-loteamento',
+    categoriaImovel: categoriasImoveis[CategoriaImovelId.Comercial],
+  },
 ];
 
 export const tipoTerrenosLoteamentos: TipoTerrenoLoteamento[] = [

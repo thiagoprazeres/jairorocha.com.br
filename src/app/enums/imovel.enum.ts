@@ -9,7 +9,6 @@ export enum TipoImovelId {
   // Residencial
   Apartamento = 1,
   Casa = 2,
-  TerrenoLoteamento = 4,
   Rural = 7,
   FlatStudio = 8,
 
@@ -19,6 +18,9 @@ export enum TipoImovelId {
   Loja = 3,
   HotelPousada = 9,
   RestauranteLanchonete = 10,
+  
+  // Residencial ou Comercial
+  TerrenoLoteamento = 4,
 }
 
 export enum TipoTerrenoLoteamentoId {
