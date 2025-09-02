@@ -64,17 +64,6 @@ export class TipoImovel implements OnInit {
     });
   }
 
-  // Propriedade computada para obter o texto do botão de região
-  get textoFiltroRegiao(): string {
-    if (!this.filtroRegiao) return 'Cidades';
-    return this.filtroRegiao; // Retorna apenas o nome da cidade
-  }
-
-  get textoFiltroQuartos(): string {
-    if (!this.filtroQuartos) return 'Quartos';
-    return this.filtroQuartos;
-  }
-
   // Filtra os imóveis com base nos filtros ativos
   get imoveisFiltrados(): Imovel[] | undefined {
     return this.imoveis?.filter(
@@ -143,17 +132,15 @@ export class TipoImovel implements OnInit {
   }
 
   // Define o filtro de região
-  setFiltroRegiao(regiao: string | null): void {
-    this.filtroRegiao = regiao;
+  setFiltroRegiao(regiao: Event): void {
+    this.filtroRegiao = (regiao.target as HTMLSelectElement).value;
   }
 
-  setFiltroQuartos(quarto: string | null): void {
-    console.log(quarto);
-    this.filtroQuartos = quarto;
+  setFiltroQuartos(quarto: Event): void {
+    this.filtroQuartos = (quarto.target as HTMLSelectElement).value;
   }
 
   setFiltroNovo(valor: boolean | null) {
-    console.log(valor);
     if (valor === true && this.filtroVendaOuAluguel === 'aluguel') {
       this.setFiltroVendaOuAluguel(null);
     }
@@ -165,11 +152,6 @@ export class TipoImovel implements OnInit {
       this.setFiltroNovo(null);
     }
     this.filtroVendaOuAluguel = valor;
-  }
-
-  fecharDropdown(event: MouseEvent | PointerEvent): void {
-    document.getElementById("filtroRegiaoList")?.blur();
-    document.getElementById("filtroQuartosList")?.blur();
   }
 
   private handleError(message: string) {

@@ -80,124 +80,31 @@
                 </button>
               </div>
             </div>
-            <div
-              class="flex flex-col gap-4 pb-6 md:flex-row md:items-center"
-            >
+            <div class="flex flex-col gap-4 pb-6 md:flex-row md:items-center">
               <!-- Filtro por Região -->
               @if(regioesDisponiveis.length > 1){
-              <div class="dropdown dropdown-end">
-                <button tabindex="0" class="btn btn-md">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="mr-1 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  {{ textoFiltroRegiao }}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="ml-1 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-                <ul
-                  tabindex="0"
-                  class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 text-nowrap shadow"
-                  id="filtroRegiaoList"
-                >
-                  <li (click)="setFiltroRegiao(null); fecharDropdown($event)">
-                    <a [class.active]="!filtroRegiao">Todas as cidades</a>
-                  </li>
-                  @for (cidade of regioesDisponiveis; track cidade) {
-                  <li (click)="setFiltroRegiao(cidade); fecharDropdown($event)">
-                    <a [class.active]="filtroRegiao === cidade">
-                      {{ cidade }}, PE
-                    </a>
-                  </li>
-                  }
-                </ul>
-              </div>
+              <select
+                class="select"
+                (change)="setFiltroRegiao($event)"
+              >
+                <option value="">Todas as cidades</option>
+                @for (cidade of regioesDisponiveis; track cidade) {
+                <option [value]="cidade">{{ cidade }}-PE</option>
+                }
+              </select>
               }
 
               <!-- Filtro por Número de Quartos -->
               @if(quartosDisponiveis.length > 1){
-              <div class="dropdown dropdown-end">
-                <button tabindex="0" class="btn btn-md">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-bed mr-1"
-                  >
-                    <path d="M2 4v16"></path>
-                    <path d="M2 8h18a2 2 0 0 1 2 2v10"></path>
-                    <path d="M2 17h20"></path>
-                    <path d="M6 8v9"></path>
-                  </svg>
-                  {{ textoFiltroQuartos }}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="ml-1 h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </button>
-                <ul
-                  tabindex="0"
-                  class="dropdown-content menu bg-base-100 rounded-box z-[1] w-72 p-2 shadow"
-                  id="filtroQuartosList"
-                >
-                  <li (click)="setFiltroQuartos(null); fecharDropdown($event)">
-                    <a [class.active]="!filtroQuartos">Todas</a>
-                  </li>
-                  @for (quarto of quartosDisponiveis; track quarto) {
-                  <li
-                    (click)="setFiltroQuartos(quarto); fecharDropdown($event)"
-                  >
-                    <a [class.active]="filtroQuartos === quarto">
-                      {{ quarto }}
-                    </a>
-                  </li>
-                  }
-                </ul>
-              </div>
+              <select
+                class="select"
+                (change)="setFiltroQuartos($event)"
+              >
+                <option value="">Todos os quartos</option>
+                @for (quarto of quartosDisponiveis; track quarto) {
+                <option [value]="quarto">{{ quarto }}</option>
+                }
+              </select>
               }
             </div>
 
