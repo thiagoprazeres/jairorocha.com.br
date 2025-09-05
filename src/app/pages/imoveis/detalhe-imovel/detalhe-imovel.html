@@ -72,6 +72,18 @@
         <div class="prose max-w-none" [innerHTML]="imovel.descricao"></div>
       </div>
       }
+      @if(imovel.tourVirtual){
+        
+      <div class="mb-12">
+        <h2 class="card-title mb-4 text-2xl">Vídeo</h2>
+        <iframe
+          [src]="iframeUrl"
+          class="aspect-video w-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      }
       <!-- Features -->
       @if ( imovel.caracteristicasImovelList &&
       imovel.caracteristicasImovelList!.length > 0 ) {
