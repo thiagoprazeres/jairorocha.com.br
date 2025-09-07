@@ -1,6 +1,5 @@
-import { EstagioObra } from './estagio-obra';
+import { EstagioObraId, SituacaoEmpreendimentoId } from '../enums/imovel.enum';
 import { FotoImovel } from './foto-imovel.interface';
-import { SituacaoEmpreendimento } from './situacao-empreendimento';
 import { TipoImovel } from './tipo-imovel';
 import { TipoPadraoImovel } from './tipo-padrao-imovel';
 
@@ -41,6 +40,6 @@ export interface Imovel {
   paraLocacao?: boolean;
   novos?: boolean;
   usados?: boolean;
-  estagioObra?: EstagioObra;
-  situacaoEmpreendimento?: SituacaoEmpreendimento;
+  estagioObra?: EstagioObraId;
+  situacaoEmpreendimento?: SituacaoEmpreendimentoId;
 }

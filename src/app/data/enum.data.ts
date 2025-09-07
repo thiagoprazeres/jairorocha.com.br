@@ -44,6 +44,16 @@ export const estagiosObra: EstagioObra[] = [
     nome: 'Pronto',
     slug: 'pronto',
   },
+  {
+    id: EstagioObraId.Projeto,
+    nome: 'Projeto',
+    slug: 'projeto',
+  },
+  {
+    id: EstagioObraId.EmConstrucao,
+    nome: 'Em Construção',
+    slug: 'em-construcao',
+  },
 ];
 
 export const situacoesEmpreendimentos: SituacaoEmpreendimento[] = [

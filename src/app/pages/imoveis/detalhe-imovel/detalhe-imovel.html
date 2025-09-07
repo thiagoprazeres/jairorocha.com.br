@@ -26,6 +26,7 @@
 
   <!-- Property Header -->
   <div class="mb-8">
+    <p class="text-neutral font-semibold"><small>{{ imovel.codigoReferenciaImovel }}</small></p>
     <h1 class="text-primary mb-2 text-3xl font-bold md:text-4xl">
       {{ imovel.nomeImovel }}
     </h1>
@@ -38,15 +39,31 @@
       <p class="text-primary text-2xl font-bold">
         {{ imovel.preco | currency }}
       </p>
-      @if ( imovel.novos) {
-      <span class="badge badge-primary badge-lg">Novo</span>
+
+      @if(imovel.novos){
+      <div class="badge badge-primary">Lançamento</div>
+      } @else if(imovel.usados){ @if(imovel.paraVenda){
+      <div class="badge badge-secondary">Revenda</div>
+      @if(imovel.paraLocacao){
+      <div class="badge badge-outline">Locação</div>
+      } } @else if(imovel.paraLocacao){
+      <div class="badge badge-outline">Locação</div>
+      } }
+    </div>
+    <div class="mt-4 flex items-center gap-4">
+      @if(imovel.estagioObra){
+      <div class="badge badge-primary">{{ estagioObraNome?.nome }}</div>
+      } @if(imovel.situacaoEmpreendimento){
+      <div class="badge badge-secondary">
+        {{ situacoesEmpreendimentoNome?.nome }}
+      </div>
       }
     </div>
   </div>
 </div>
 <!-- Photo Gallery -->
 <div>
-  <swiper-container pagination navigation autoplay class="max-w-7xl m-auto">
+  <swiper-container pagination navigation autoplay class="m-auto max-w-7xl">
     @for (foto of imovel.fotoImovelList; track $index) {
     <swiper-slide class="flex h-auto max-h-[800px] items-center justify-center">
       <img
@@ -71,9 +88,8 @@
         <h2 class="card-title mb-4 text-2xl">Descrição</h2>
         <div class="prose max-w-none" [innerHTML]="imovel.descricao"></div>
       </div>
-      }
-      @if(imovel.tourVirtual){
-        
+      } @if(imovel.tourVirtual){
+
       <div class="mb-12">
         <h2 class="card-title mb-4 text-2xl">Vídeo</h2>
         <iframe
