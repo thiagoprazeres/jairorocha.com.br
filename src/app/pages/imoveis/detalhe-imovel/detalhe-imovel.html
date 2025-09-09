@@ -36,9 +36,15 @@
       imovel.nomeBairro }}, {{ imovel.nomeCidade }} - {{ imovel.siglaEstado }}
     </p>
     <div class="mt-4 flex items-center gap-4">
+      @if(imovel.paraVenda && imovel.preco > 0){
       <p class="text-primary text-2xl font-bold">
-        {{ imovel.preco | currency }}
+        Venda: {{ imovel.preco | currency }}
       </p>
+      } @if(imovel.paraLocacao && imovel.precoLocacao > 0){
+      <p class="text-primary text-2xl font-bold">
+        Locação: {{ imovel.precoLocacao | currency }}
+      </p>
+      }
 
       @if(imovel.novos){
       <div class="badge badge-primary">Lançamento</div>
