@@ -24,10 +24,15 @@
             }
           </div>
           <h2 class="text-base font-bold">{{imovel.nomeImovel}}</h2>
+          @if(imovel.paraVenda && imovel.preco > 0){
           <span class="text-base"
-            >{{(imovel.paraVenda ? imovel.preco : imovel.precoLocacao) |
-            currency}}</span
+            >{{imovel.preco | currency}}</span
           >
+          } @if(imovel.paraLocacao && imovel.precoLocacao > 0){
+          <span class="text-base"
+            >{{imovel.precoLocacao | currency}}</span
+          >
+          }
           <div class="flex items-start gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
