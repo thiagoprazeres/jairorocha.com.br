@@ -43,7 +43,7 @@ export class DetalheImovelComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((data: any) => {
-      console.log(data['imovel']);
+      // console.log(data['imovel']);
       this.imovel = data['imovel'];
       this.situacoesEmpreendimentoNome = this.situacoesEmpreendimentos.find(
         (situacaoEmpreendimento) =>
