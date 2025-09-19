@@ -26,7 +26,9 @@
 
   <!-- Property Header -->
   <div class="mb-8">
-    <p class="text-neutral font-semibold"><small>{{ imovel.codigoReferenciaImovel }}</small></p>
+    <p class="text-neutral font-semibold">
+      <small>{{ imovel.codigoReferenciaImovel }}</small>
+    </p>
     <h1 class="text-primary mb-2 text-3xl font-bold md:text-4xl">
       {{ imovel.nomeImovel }}
     </h1>
@@ -44,9 +46,7 @@
       <p class="text-primary text-2xl font-bold">
         Locação: {{ imovel.precoLocacao | currency }}
       </p>
-      }
-
-      @if(imovel.novos){
+      } @if(imovel.novos){
       <div class="badge badge-primary">Lançamento</div>
       } @else if(imovel.usados){ @if(imovel.paraVenda){
       <div class="badge badge-secondary">Revenda</div>
@@ -58,14 +58,13 @@
     </div>
     <div class="mt-4 flex items-center gap-4">
       @if(imovel.estagioObra){
-        @if(!(imovel.novos && estagioObraNome?.nome === 'Lançamento')){
-          <div class="badge badge-primary">{{ estagioObraNome?.nome }}</div>
-        }
-      } @if(imovel.situacaoEmpreendimento){
+      <div class="badge badge-primary">{{ estagioObraNome?.nome }}</div>
+      } @if(imovel.situacaoEmpreendimento){ @if(!imovel.novos &&
+      situacoesEmpreendimentoNome?.nome !== 'Lançamento'){
       <div class="badge badge-secondary">
         {{ situacoesEmpreendimentoNome?.nome }}
       </div>
-      }
+      } }
     </div>
   </div>
 </div>
