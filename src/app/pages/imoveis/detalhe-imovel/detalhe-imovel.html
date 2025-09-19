@@ -58,7 +58,9 @@
     </div>
     <div class="mt-4 flex items-center gap-4">
       @if(imovel.estagioObra){
-      <div class="badge badge-primary">{{ estagioObraNome?.nome }}</div>
+        @if(!(imovel.novos && estagioObraNome?.nome === 'Lançamento')){
+          <div class="badge badge-primary">{{ estagioObraNome?.nome }}</div>
+        }
       } @if(imovel.situacaoEmpreendimento){
       <div class="badge badge-secondary">
         {{ situacoesEmpreendimentoNome?.nome }}
