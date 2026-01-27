@@ -1,6 +1,16 @@
 import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
 import { categoriasImoveis, tiposImoveis } from './data/enum.data';
-import { ids } from './data/ids';
+import { environment } from '../environments/environment';
+
+async function fetchImoveisIds(): Promise<string[]> {
+  const response = await fetch(`${environment.apiUrl}/imoveis/ids`);
+
+  if (!response.ok) {
+    throw new Error(`Erro ao buscar ids: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
+}
 
 // Function to get all possible paths for prerendering
 export async function getPrerenderParams() {
@@ -66,6 +76,8 @@ export const serverRoutes: ServerRoute[] = [
     fallback: PrerenderFallback.Client,
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
+      const ids = await fetchImoveisIds();
+
       return ids.map((id) => ({
         categoriaSlug: id.split('/')[0],
         tipoSlug: id.split('/')[1],
