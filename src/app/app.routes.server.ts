@@ -3,13 +3,22 @@ import { categoriasImoveis, tiposImoveis } from './data/enum.data';
 import { environment } from '../environments/environment';
 
 async function fetchImoveisIds(): Promise<string[]> {
-  const response = await fetch(`${environment.apiUrl}/imoveis/ids`);
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 6000);
 
-  if (!response.ok) {
-    throw new Error(`Erro ao buscar ids: ${response.status} ${response.statusText}`);
+  try {
+    const response = await fetch(`${environment.apiUrl}/imoveis/ids`, {
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Erro ao buscar ids: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return response.json();
 }
 
 // Function to get all possible paths for prerendering
@@ -76,7 +85,13 @@ export const serverRoutes: ServerRoute[] = [
     fallback: PrerenderFallback.Client,
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
-      const ids = await fetchImoveisIds();
+      let ids: string[] = [];
+
+      try {
+        ids = await fetchImoveisIds();
+      } catch {
+        return [];
+      }
 
       return ids.map((id) => ({
         categoriaSlug: id.split('/')[0],
