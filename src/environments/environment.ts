@@ -1,3 +1,3 @@
 export const environment = {
-  apiUrl: 'https://api.jairorocha.com.br/',
+  apiUrl: 'https://api.jairorocha.com.br',
 };
