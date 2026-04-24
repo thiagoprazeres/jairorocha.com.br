@@ -13,17 +13,23 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { situacoesEmpreendimentos, estagiosObra } from '../../../data/enum.data';
 import { SituacaoEmpreendimento } from '../../../interfaces/situacao-empreendimento';
 import { EstagioObra } from '../../../interfaces/estagio-obra';
+import { LightgalleryModule } from 'lightgallery/angular';
+import { LightGallery } from 'lightgallery/lightgallery';
+import { InitDetail } from 'lightgallery/lg-events';
+import lgZoom from 'lightgallery/plugins/zoom';
+import lgThumbnail from 'lightgallery/plugins/thumbnail';
 
 register();
 
 @Component({
   selector: 'app-detalhe-imovel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LightgalleryModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './detalhe-imovel.html',
 })
 export class DetalheImovelComponent implements OnInit {
+  private lgInstance?: LightGallery;
   spaceBetween = 10;
   imovel!: Imovel;
   iframeUrl: SafeResourceUrl;
@@ -32,7 +38,22 @@ export class DetalheImovelComponent implements OnInit {
   estagiosObra: EstagioObra[] = estagiosObra;
   estagioObraNome!: EstagioObra | null;
 
+  settings = {
+    plugins: [lgZoom, lgThumbnail],
+    counter: true,
+    download: false,
+    selector: 'a',
+  };
+
   private imovelService = inject(ImovelService);
+
+  openGallery(): void {
+    this.lgInstance?.openGallery();
+  }
+
+  onInitGallery = (detail: InitDetail): void => {
+    this.lgInstance = detail.instance;
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -59,4 +80,5 @@ export class DetalheImovelComponent implements OnInit {
       );
     });
   }
+
 }

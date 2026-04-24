@@ -70,20 +70,67 @@
 </div>
 <!-- Photo Gallery -->
 <div>
-  <swiper-container pagination navigation autoplay class="m-auto max-w-7xl">
+  <div class="relative m-auto max-w-7xl">
+    <swiper-container pagination navigation autoplay>
+      @for (foto of imovel.fotoImovelList; track $index) {
+      <swiper-slide class="flex h-auto max-h-[800px] items-center justify-center">
+        <img
+          [src]="foto.url"
+          [alt]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
+          class="h-full w-full object-cover"
+        />
+      </swiper-slide>
+      }
+      <swiper-pagination></swiper-pagination>
+      <swiper-button-prev></swiper-button-prev>
+      <swiper-button-next></swiper-button-next>
+    </swiper-container>
+
+    <!-- Ver fotos button -->
+    @if (imovel.fotoImovelList && imovel.fotoImovelList.length > 0) {
+    <button
+      type="button"
+      (click)="openGallery()"
+      class="btn btn-primary absolute bottom-4 right-4 z-10 shadow-lg"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="mr-2 h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+        />
+      </svg>
+      Ver fotos
+    </button>
+    }
+  </div>
+
+  <!-- Hidden lightGallery -->
+  <lightgallery
+    [settings]="settings"
+    [onInit]="onInitGallery"
+    style="display: none"
+  >
     @for (foto of imovel.fotoImovelList; track $index) {
-    <swiper-slide class="flex h-auto max-h-[800px] items-center justify-center">
+    <a
+      [href]="foto.url"
+      [attr.data-src]="foto.url"
+      [attr.data-sub-html]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
+    >
       <img
         [src]="foto.url"
         [alt]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
-        class="h-full w-full object-cover"
       />
-    </swiper-slide>
+    </a>
     }
-    <swiper-pagination></swiper-pagination>
-    <swiper-button-prev></swiper-button-prev>
-    <swiper-button-next></swiper-button-next>
-  </swiper-container>
+  </lightgallery>
 </div>
 <div class="container mx-auto p-4">
   <!-- Property Details -->
