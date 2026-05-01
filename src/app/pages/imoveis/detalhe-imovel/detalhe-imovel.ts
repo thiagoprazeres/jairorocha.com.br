@@ -3,8 +3,9 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   inject,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Imovel } from '../../../interfaces/imovel.interface';
 import { ImovelService } from '../../../services/imovel.service';
@@ -19,8 +20,6 @@ import { InitDetail } from 'lightgallery/lg-events';
 import lgZoom from 'lightgallery/plugins/zoom';
 import lgThumbnail from 'lightgallery/plugins/thumbnail';
 
-register();
-
 @Component({
   selector: 'app-detalhe-imovel',
   standalone: true,
@@ -30,6 +29,8 @@ register();
 })
 export class DetalheImovelComponent implements OnInit {
   private lgInstance?: LightGallery;
+  private platformId = inject(PLATFORM_ID);
+  protected isBrowser = isPlatformBrowser(this.platformId);
   spaceBetween = 10;
   imovel!: Imovel;
   iframeUrl: SafeResourceUrl;
@@ -48,7 +49,9 @@ export class DetalheImovelComponent implements OnInit {
   private imovelService = inject(ImovelService);
 
   openGallery(): void {
-    this.lgInstance?.openGallery();
+    if (this.isBrowser) {
+      this.lgInstance?.openGallery();
+    }
   }
 
   onInitGallery = (detail: InitDetail): void => {
@@ -63,6 +66,10 @@ export class DetalheImovelComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isBrowser) {
+      register();
+    }
+
     this.route.data.subscribe((data: any) => {
       // console.log(data['imovel']);
       this.imovel = data['imovel'];
