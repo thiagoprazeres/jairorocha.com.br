@@ -55,6 +55,21 @@ h1, h2, h3, .title {
   --noise: 0;
 }
 
+@theme {
+  --animate-whatsapp-ring: whatsapp-ring 2.4s ease-out infinite;
+  --animate-fade-in-up: fade-in-up 600ms ease-out both;
+}
+
+@keyframes whatsapp-ring {
+  0% { opacity: 0.45; transform: scale(0.94); }
+  70%, 100% { opacity: 0; transform: scale(1.16); }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 swiper-container {
   --swiper-theme-color: #fefefe;
 }

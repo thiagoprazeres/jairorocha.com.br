@@ -8,7 +8,7 @@
   >
     <div class="mx-auto flex h-full max-w-7xl items-end justify-start">
       <div
-        class="card mb-8 ml-4 w-2/3 max-w-72 bg-white/90 shadow-none backdrop-blur-xs"
+        class="card mb-8 ml-4 w-2/3 max-w-72 bg-white/90 shadow-none backdrop-blur-xs motion-safe:animate-fade-in-up"
       >
         <div class="card-body p-5">
           <div class="flex gap-1">
@@ -16,7 +16,7 @@
               >{{imovel.tipoImovel.nome}}</span
             >
             @if(imovel.paraVenda && imovel.novos) {
-            <span class="badge badge-xs badge-primary">Lançamento</span>
+            <span class="badge badge-xs badge-primary motion-safe:animate-pulse">Lançamento</span>
             } @else if (imovel.paraVenda && imovel.usados) {
             <span class="badge badge-xs badge-neutral">Revenda</span>
             } @else if(imovel.paraLocacao){
@@ -161,7 +161,7 @@
       $index) {
       <a
         [href]="`/imoveis/${imovel.tipoImovel.categoriaImovel.slug}/${imovel.tipoImovel.slug}/${imovel.urlCustom}/${imovel.id}`"
-        class="card bg-primary-content border-neutral-200 shadow-sm transition-shadow duration-300 hover:shadow-xl"
+        class="card bg-primary-content border-neutral-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       >
         <figure>
           <img
@@ -274,11 +274,11 @@
     </div>
 
     <div class="mt-16 text-center">
-      <a id="todosImoveisButton" href="/imoveis" class="btn btn-primary btn-lg">
+      <a id="todosImoveisButton" href="/imoveis" class="btn btn-primary btn-lg group">
         Ver todos os imóveis
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="ml-2 h-5 w-5"
+          class="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
