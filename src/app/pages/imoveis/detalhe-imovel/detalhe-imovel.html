@@ -87,10 +87,10 @@
     </swiper-container>
 
     <!-- Ver fotos button -->
-    @if (imovel.fotoImovelList && imovel.fotoImovelList.length > 0) {
+    @if (gallerySlides.length > 0) {
     <button
       type="button"
-      (click)="openGallery()"
+      (click)="gallery.openGallery(0)"
       class="btn btn-primary absolute bottom-4 right-4 z-10 shadow-lg"
     >
       <svg
@@ -112,23 +112,12 @@
     }
   </div>
 
-  <!-- Hidden lightGallery -->
-  @if (isBrowser) {
-  <lightgallery [settings]="settings" [onInit]="onInitGallery" style="display: none">
-    @for (foto of imovel.fotoImovelList; track $index) {
-    <a
-      [href]="foto.url"
-      [attr.data-src]="foto.url"
-      [attr.data-sub-html]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
-    >
-      <img
-        [src]="foto.url"
-        [alt]="imovel.nomeImovel + ' - Foto ' + ($index + 1)"
-      />
-    </a>
-    }
-  </lightgallery>
-  }
+  <lg-gallery
+    #gallery="lgGallery"
+    [slides]="gallerySlides"
+    [features]="galleryFeatures"
+    [download]="false"
+  />
 </div>
 <div class="container mx-auto p-4">
   <!-- Property Details -->

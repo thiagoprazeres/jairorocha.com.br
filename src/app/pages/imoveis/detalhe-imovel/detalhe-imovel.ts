@@ -4,33 +4,32 @@ import {
   inject,
   OnInit,
   PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { LgGalleryComponent, type LgGalleryItem } from '@lightgallery/angular';
+import { withThumbnail } from '@lightgallery/angular/plugins/thumbnail';
+import { withZoom } from '@lightgallery/angular/plugins/zoom';
 import { Imovel } from '../../../interfaces/imovel.interface';
-import { ImovelService } from '../../../services/imovel.service';
 import { register } from 'swiper/element/bundle';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { situacoesEmpreendimentos, estagiosObra } from '../../../data/enum.data';
 import { SituacaoEmpreendimento } from '../../../interfaces/situacao-empreendimento';
 import { EstagioObra } from '../../../interfaces/estagio-obra';
-import { LightgalleryModule } from 'lightgallery/angular';
-import { LightGallery } from 'lightgallery/lightgallery';
-import { InitDetail } from 'lightgallery/lg-events';
-import lgZoom from 'lightgallery/plugins/zoom';
-import lgThumbnail from 'lightgallery/plugins/thumbnail';
 
 @Component({
   selector: 'app-detalhe-imovel',
   standalone: true,
-  imports: [CommonModule, LightgalleryModule],
+  imports: [CommonModule, LgGalleryComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './detalhe-imovel.html',
 })
 export class DetalheImovelComponent implements OnInit {
-  private lgInstance?: LightGallery;
-  private platformId = inject(PLATFORM_ID);
-  protected isBrowser = isPlatformBrowser(this.platformId);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  protected readonly galleryFeatures = [withZoom(), withThumbnail()];
+  protected gallerySlides: LgGalleryItem[] = [];
   spaceBetween = 10;
   imovel!: Imovel;
   iframeUrl: SafeResourceUrl;
@@ -38,25 +37,6 @@ export class DetalheImovelComponent implements OnInit {
   situacoesEmpreendimentoNome!: SituacaoEmpreendimento | null;
   estagiosObra: EstagioObra[] = estagiosObra;
   estagioObraNome!: EstagioObra | null;
-
-  settings = {
-    plugins: [lgZoom, lgThumbnail],
-    counter: true,
-    download: false,
-    selector: 'a',
-  };
-
-  private imovelService = inject(ImovelService);
-
-  openGallery(): void {
-    if (this.isBrowser) {
-      this.lgInstance?.openGallery();
-    }
-  }
-
-  onInitGallery = (detail: InitDetail): void => {
-    this.lgInstance = detail.instance;
-  };
 
   constructor(
     private route: ActivatedRoute,
@@ -73,6 +53,10 @@ export class DetalheImovelComponent implements OnInit {
     this.route.data.subscribe((data: any) => {
       // console.log(data['imovel']);
       this.imovel = data['imovel'];
+      this.gallerySlides = (this.imovel.fotoImovelList ?? []).map((foto, index) => {
+        const caption = `${this.imovel.nomeImovel} - Foto ${index + 1}`;
+        return { src: foto.url, thumb: foto.url, alt: caption, caption };
+      });
       this.situacoesEmpreendimentoNome = this.situacoesEmpreendimentos.find(
         (situacaoEmpreendimento) =>
           situacaoEmpreendimento.id === this.imovel.situacaoEmpreendimento || null,

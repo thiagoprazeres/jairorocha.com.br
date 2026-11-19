@@ -1,4 +1,9 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 // import { AsyncPipe, JsonPipe } from '@angular/common';
 import { Imoveis } from '../imoveis/imoveis';
 //import { Observable } from 'rxjs';
@@ -14,6 +19,7 @@ register();
   imports: [CurrencyPipe, Imoveis],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './home.css',
 })
 export class Home implements OnInit {

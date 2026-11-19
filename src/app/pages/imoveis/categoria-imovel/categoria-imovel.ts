@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TipoImovel } from '../../../interfaces/tipo-imovel';
 import { CategoriaImovel as CategoriaImovelInterface } from '../../../interfaces/categoria-imovel';
@@ -7,6 +7,7 @@ import { tiposImoveis, categoriasImoveis } from '../../../data/enum.data';
 @Component({
   selector: 'app-categoria-imovel',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './categoria-imovel.html',
 })
 export class CategoriaImovel implements OnInit {

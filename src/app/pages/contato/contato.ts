@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-contato',
   imports: [FormsModule],
-  templateUrl: './contato.html'
+  changeDetection: ChangeDetectionStrategy.Eager,
+  templateUrl: './contato.html',
 })
 export class Contato {
   sendWhatsApp(form: NgForm) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CategoriaImovel } from '../../interfaces/categoria-imovel';
 import { TipoImovel } from '../../interfaces/tipo-imovel';
 import { categoriasImoveis, tiposImoveis } from '../../data/enum.data';
@@ -6,6 +6,7 @@ import { categoriasImoveis, tiposImoveis } from '../../data/enum.data';
 @Component({
   selector: 'app-header',
   templateUrl: './header.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./header.css'],
 })
 export class Header {

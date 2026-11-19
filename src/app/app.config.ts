@@ -11,6 +11,7 @@ import { routes } from './app.routes';
 import {
   provideClientHydration,
   withHttpTransferCacheOptions,
+  withNoIncrementalHydration,
 } from '@angular/platform-browser';
 import { ImovelService } from './services/imovel.service';
 import ptBr from '@angular/common/locales/pt';
@@ -33,6 +34,7 @@ export const appConfig: ApplicationConfig = {
       withHttpTransferCacheOptions({
         includePostRequests: true,
       }),
+      withNoIncrementalHydration(),
     ),
     provideHttpClient(withFetch()),
     ImovelService,

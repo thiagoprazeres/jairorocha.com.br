@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TipoImovel as TipoImovelInterface } from '../../../interfaces/tipo-imovel';
@@ -10,6 +10,7 @@ import { tiposImoveis } from '../../../data/enum.data';
   selector: 'app-tipo-imovel',
   imports: [CommonModule],
   templateUrl: './tipo-imovel.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class TipoImovel implements OnInit {
