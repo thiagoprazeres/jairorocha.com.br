@@ -21,7 +21,7 @@
     "@angular/ssr": "^22.3.0",
     "@lightgallery/angular": "^3.0.0",
     "@tailwindcss/postcss": "^4.3.5",
-    "daisyui": "^5.8.1",
+    "daisyui": "^5.8.2",
     "express": "^5.3.0",
     "lightgallery": "^3.0.0",
     "postcss": "^8.5.33",
@@ -38,10 +38,10 @@
     "@netlify/angular-runtime": "^4.0.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.6",
-    "baseline-browser-mapping": "^2.11.38",
+    "baseline-browser-mapping": "^2.11.39",
     "postcss": "^8.5.33",
     "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "typescript": "~6.0.3"
+    "typescript": "^6.0.3"
   }
 }
