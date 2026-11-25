@@ -11,7 +11,7 @@ import { Imoveis } from '../imoveis/imoveis';
 import { Imovel } from '../../interfaces/imovel.interface';
 import { CurrencyPipe } from '@angular/common';
 import { register } from 'swiper/element/bundle';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 register();
 @Component({
@@ -28,7 +28,14 @@ export class Home implements OnInit {
   imoveisDestaqueBanner: Imovel[] | null = null;
   imoveisDestaque: Imovel[] | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  buscar(event: Event, termo: string, negocio: string): void {
+    event.preventDefault();
+    void this.router.navigate(['/imoveis/busca'], {
+      queryParams: { q: termo.trim() || null, negocio: negocio || null },
+    });
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe((data: any) => {

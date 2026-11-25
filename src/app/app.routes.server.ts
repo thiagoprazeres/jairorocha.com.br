@@ -60,6 +60,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Prerender,
     getPrerenderParams,
   },
+  { path: 'imoveis/busca', renderMode: RenderMode.Client },
   // Dynamic routes - set to client-side rendering
   {
     path: 'imoveis/:categoriaSlug',

@@ -43,18 +43,7 @@ export class ImovelService {
   }
 
   getAllImoveis(): Observable<Imovel[]> {
-    this.allImoveis$ = this.http
-      .get<Imovel[]>(`${this.apiUrl}/imoveis`, {
-        params: {
-          quantidadeImoveis: '999',
-          tipoImovel: '1;2;3;4;5;6;7;8;9;10',
-        },
-      })
-      .pipe(
-        shareReplay(1), // Cache the result
-        catchError(this.handleError<Imovel[]>('getImoveis', [])),
-      );
-    return this.allImoveis$;
+    return this.http.get<Imovel[]>(`${this.apiUrl}/imoveis`);
   }
 
   findByDestaqueNoBanner(destaqueOrDestaqueNoBanner: boolean): Observable<Imovel[]> {

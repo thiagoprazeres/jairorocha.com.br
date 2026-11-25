@@ -150,6 +150,26 @@
   <swiper-button-next></swiper-button-next>
 </swiper-container>
 
+<section class="mx-auto max-w-7xl px-4 py-8" aria-labelledby="titulo-busca">
+  <h2 id="titulo-busca" class="mb-4 text-2xl font-bold">Encontre seu imóvel</h2>
+  <form role="search" action="/imoveis/busca" (submit)="buscar($event, termo.value, negocio.value)"
+        class="grid items-end gap-3 rounded-box bg-base-200 p-4 sm:grid-cols-[auto_1fr_auto]">
+    <label class="grid gap-1 text-sm font-medium">
+      Finalidade
+      <select #negocio name="negocio" class="select w-full">
+        <option value="">Todos</option>
+        <option value="venda">Comprar</option>
+        <option value="aluguel">Alugar</option>
+      </select>
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Bairro, cidade, nome ou código
+      <input #termo name="q" type="search" class="input w-full" placeholder="Ex.: Boa Viagem" />
+    </label>
+    <button class="btn btn-primary" type="submit">Buscar imóveis</button>
+  </form>
+</section>
+
 <app-imoveis />
 
 <!-- Lançamentos Section -->

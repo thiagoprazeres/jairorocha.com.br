@@ -27,6 +27,11 @@ export const routes: Routes = [
     component: Imoveis,
   },
   {
+    path: 'imoveis/busca',
+    title: 'Buscar imóveis | Jairo Rocha',
+    loadComponent: () => import('./pages/imoveis/busca/busca').then(m => m.Busca),
+  },
+  {
     path: 'imoveis/:categoriaSlug',
     component: CategoriaImovel,
   },

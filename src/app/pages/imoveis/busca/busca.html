@@ -1,0 +1,98 @@
+<section class="mx-auto max-w-7xl px-4 py-8" aria-labelledby="titulo-resultados">
+  <h1 id="titulo-resultados" class="mb-5 text-3xl font-bold">Buscar imóveis</h1>
+
+  <form #form role="search" (submit)="buscar($event, form)"
+        class="mb-6 grid items-end gap-3 rounded-box bg-base-200 p-4 sm:grid-cols-2 lg:grid-cols-4">
+    <label class="grid gap-1 text-sm font-medium sm:col-span-2">
+      Bairro, cidade, nome ou código
+      <input name="q" type="search" class="input w-full" [value]="filtros().q" />
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Finalidade
+      <select name="negocio" class="select w-full">
+        <option value="" [selected]="!filtros().negocio">Todos</option>
+        <option value="venda" [selected]="filtros().negocio === 'venda'">Comprar</option>
+        <option value="aluguel" [selected]="filtros().negocio === 'aluguel'">Alugar</option>
+      </select>
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Tipo
+      <select name="tipo" class="select w-full">
+        <option value="" [selected]="!filtros().tipo">Todos os tipos</option>
+        @for (tipo of tipos(); track tipo.id) {
+          <option [value]="tipo.id" [selected]="filtros().tipo === tipo.id.toString()">{{ tipo.nome }}</option>
+        }
+      </select>
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Preço mínimo (R$)
+      <input name="minimo" type="number" min="0" step="any" class="input w-full"
+             (input)="maximo.setCustomValidity('')" [value]="filtros().minimo ?? ''" />
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Preço máximo (R$)
+      <input #maximo name="maximo" type="number" min="0" step="any" class="input w-full"
+             (input)="maximo.setCustomValidity('')" [value]="filtros().maximo ?? ''" />
+    </label>
+    <label class="grid gap-1 text-sm font-medium">
+      Mínimo de quartos
+      <input name="quartos" type="number" min="1" step="1" class="input w-full"
+             [value]="filtros().quartos ?? ''" />
+    </label>
+    <div class="flex flex-wrap gap-2">
+      <button type="submit" class="btn btn-primary">Buscar imóveis</button>
+      <a routerLink="/imoveis/busca" (click)="form.reset()" class="btn btn-ghost">Limpar</a>
+    </div>
+  </form>
+
+  @if (catalogo() === undefined) {
+    <p role="status">Carregando imóveis…</p>
+  } @else if (catalogo() === null) {
+    <div class="alert" role="alert">
+      <p>Não foi possível carregar os imóveis.</p>
+      <button type="button" class="btn btn-sm" (click)="tentarNovamente()">Tentar novamente</button>
+    </div>
+  } @else {
+    <p role="status" class="mb-4 font-medium">
+      @switch (resultados().length) {
+        @case (0) { Nenhum imóvel encontrado. Experimente mudar os filtros. }
+        @case (1) { 1 imóvel encontrado }
+        @default { {{ resultados().length }} imóveis encontrados }
+      }
+    </p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      @for (imovel of visiveis(); track imovel.id) {
+        <a [routerLink]="['/imoveis', imovel.tipoImovel.categoriaImovel.slug, imovel.tipoImovel.slug, imovel.urlCustom, imovel.id]"
+           class="card overflow-hidden border border-base-300 bg-base-100 shadow-sm hover:shadow-md">
+          @if (imovel.urlFotoDestaque) {
+            <img [src]="imovel.urlFotoDestaque" alt="" loading="lazy" class="aspect-video w-full object-cover" />
+          }
+          <div class="card-body">
+            <h2 class="card-title">{{ imovel.nomeImovel }}</h2>
+            <p>{{ imovel.nomeBairro }}{{ imovel.nomeBairro && imovel.nomeCidade ? ', ' : '' }}{{ imovel.nomeCidade }}</p>
+            @if (imovel.paraVenda && imovel.preco > 0 && filtros().negocio !== 'aluguel') {
+              <p>Venda {{ imovel.preco | currency }}</p>
+            }
+            @if (imovel.paraLocacao && imovel.precoLocacao > 0 && filtros().negocio !== 'venda') {
+              <p>Aluguel {{ imovel.precoLocacao | currency }}</p>
+            }
+            <p class="text-sm">{{ imovel.codigoReferenciaImovel }}</p>
+          </div>
+        </a>
+      }
+    </div>
+    @if (totalPaginas() > 1) {
+      <nav class="mt-6 flex flex-wrap items-center justify-center gap-3" aria-label="Páginas de resultados">
+        @if (pagina() > 1) {
+          <a routerLink="/imoveis/busca" queryParamsHandling="merge" [queryParams]="{ pagina: pagina() - 1 }"
+             class="btn btn-outline">Anterior</a>
+        }
+        <span>Página {{ pagina() }} de {{ totalPaginas() }}</span>
+        @if (pagina() < totalPaginas()) {
+          <a routerLink="/imoveis/busca" queryParamsHandling="merge" [queryParams]="{ pagina: pagina() + 1 }"
+             class="btn btn-outline">Próxima</a>
+        }
+      </nav>
+    }
+  }
+</section>
