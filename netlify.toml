@@ -1,0 +1,5 @@
+[[plugins]]
+  package = "./netlify/plugins/catalogo"
+
+[functions.catalogo]
+  included_files = [".catalogo.json"]

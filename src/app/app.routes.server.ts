@@ -1,3 +1,4 @@
+import { loadCatalog } from '../catalogo/catalogo.server';
 import { PrerenderFallback, RenderMode, ServerRoute } from '@angular/ssr';
 import { categoriasImoveis, tiposImoveis } from './data/enum.data';
 import { environment } from '../environments/environment';
@@ -85,6 +86,15 @@ export const serverRoutes: ServerRoute[] = [
     fallback: PrerenderFallback.Client,
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
+      if (environment.apiUrl === '/api') {
+        return (await loadCatalog()).map(i => ({
+          categoriaSlug: i.tipoImovel.categoriaImovel.slug,
+          tipoSlug: i.tipoImovel.slug,
+          urlCustom: i.urlCustom,
+          id: String(i.id),
+        }));
+      }
+
       let ids: string[] = [];
 
       try {
